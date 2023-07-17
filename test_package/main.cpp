@@ -19,11 +19,11 @@
 #include <cstdlib>
 #include <exception>
 
-#include <libhal-__device__/__device__.hpp>
+#include <libhal-micromod/micromod.hpp>
 
 int main()
 {
-  hal::__device__::__device___replace_me bar;
+  hal::micromod::micromod_replace_me bar;
 }
 
 namespace boost {
