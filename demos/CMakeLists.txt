@@ -29,18 +29,17 @@ endif()
 find_package(libhal-${platform_library} REQUIRED CONFIG)
 find_package(libhal-micromod REQUIRED CONFIG)
 find_package(libhal-util REQUIRED CONFIG)
+find_package(libhal REQUIRED CONFIG)
 
-set(DEMOS micromod)
+set(DEMOS blinker)
 
-add_library(startup_code
-    main.cpp
-    platforms/${platform}.cpp)
+add_library(startup_code main.cpp)
 target_include_directories(startup_code PUBLIC .)
 target_compile_features(startup_code PRIVATE cxx_std_20)
 target_link_libraries(startup_code PRIVATE
-    libhal::${platform_library}
     libhal::micromod
-    libhal::util)
+    libhal::util
+    libhal::libhal)
 
 foreach(demo IN LISTS DEMOS)
     set(current_project ${demo}.elf)
@@ -49,9 +48,11 @@ foreach(demo IN LISTS DEMOS)
     target_include_directories(${current_project} PUBLIC .)
     target_compile_features(${current_project} PRIVATE cxx_std_20)
     target_link_libraries(${current_project} PRIVATE
-        libhal::${platform_library}
         libhal::micromod
         libhal::util
+        libhal::libhal
+        libhal::${platform_library}
         startup_code)
     libhal_post_build(${current_project})
+    libhal_disassemble(${current_project})
 endforeach()

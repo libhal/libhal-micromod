@@ -12,24 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <array>
+
+#include <libhal-micromod/micromod.hpp>
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
-#include "../hardware_map.hpp"
-
-hal::status application(hardware_map& p_map)
+hal::status application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
-  auto& clock = *p_map.clock;
-  auto& console = *p_map.console;
+  std::array<hal::byte, 512> console_buffer{};
 
-  hal::print(console, "Demo Application Starting...\n\n");
+  auto& clock = hal::micromod::v1::uptime_clock();
+  auto& console = hal::micromod::v1::console(console_buffer);
+  auto& led = hal::micromod::v1::led();
+
+  hal::print(console, "Starting blinker demo...\n\n");
 
   while (true) {
+    hal::print(console, "LED state = true\n");
+    HAL_CHECK(led.level(true));
     hal::delay(clock, 500ms);
-    hal::print(console, "Hello, world\n");
+
+    hal::print(console, "LED state = false\n");
+    HAL_CHECK(led.level(false));
+    hal::delay(clock, 500ms);
   }
 
   return hal::success();

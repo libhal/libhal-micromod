@@ -23,7 +23,7 @@
 
 int main()
 {
-  hal::micromod::micromod_replace_me bar;
+  // hal::micromod::micromod_replace_me bar;
 }
 
 namespace boost {

@@ -1,8 +1,6 @@
 # libhal-micromod
 
 [![✅ Checks](https://github.com/libhal/libhal-micromod/actions/workflows/ci.yml/badge.svg)](https://github.com/libhal/libhal-micromod/actions/workflows/ci.yml)
-[![Coverage](https://libhal.github.io/libhal-micromod/coverage/coverage.svg)](https://libhal.github.io/libhal-micromod/coverage/)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b084e6d5962d49a9afcb275d62cd6586)](https://www.codacy.com/gh/libhal/libhal-micromod/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=libhal/libhal-micromod&amp;utm_campaign=Badge_Grade)
 [![GitHub stars](https://img.shields.io/github/stars/libhal/libhal-micromod.svg)](https://github.com/libhal/libhal-micromod/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/libhal/libhal-micromod.svg)](https://github.com/libhal/libhal-micromod/network)
 [![GitHub issues](https://img.shields.io/github/issues/libhal/libhal-micromod.svg)](https://github.com/libhal/libhal-micromod/issues)

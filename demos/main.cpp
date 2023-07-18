@@ -12,30 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "hardware_map.hpp"
+#include <libhal-micromod/micromod.hpp>
 
+#include <cstdio>
+#include <cstdlib>
+#include <exception>
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include <libhal-armcortex/startup.hpp>
+#include <libhal-armcortex/system_control.hpp>
+#include <libhal/error.hpp>
+
+hal::status application();
+
 int main()
 {
-  auto processor_status = initialize_processor();
+  hal::micromod::v1::initialize_platform();
 
-  if (!processor_status) {
-    hal::halt();
-  }
-
-  auto platform_status = initialize_platform();
-
-  if (!platform_status) {
-    hal::halt();
-  }
-
-  auto hardware_map = platform_status.value();
-  auto is_finished = application(hardware_map);
+  auto is_finished = application();
 
   if (!is_finished) {
-    hardware_map.reset();
+    hal::micromod::v1::reset();
   } else {
     hal::halt();
   }
@@ -46,7 +44,7 @@ int main()
 namespace boost {
 void throw_exception([[maybe_unused]] std::exception const& e)
 {
-  std::abort();
+  hal::micromod::v1::reset();
 }
 }  // namespace boost
 
