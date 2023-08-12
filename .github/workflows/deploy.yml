@@ -34,9 +34,7 @@ jobs:
     if: github.event.action != 'deleted'
     steps:
       - uses: actions/checkout@v3
-      - name: 📥 Install CMake + Conan
-        run: pip3 install cmake conan
-
+      - run: pip3 install conan
       - name: 📡 Add `libhal` repo to conan remotes
         run: conan remote add libhal
           https://libhal.jfrog.io/artifactory/api/conan/trunk-conan

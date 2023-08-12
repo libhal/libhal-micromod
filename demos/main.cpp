@@ -14,6 +14,7 @@
 
 #include <libhal-micromod/micromod.hpp>
 
+#include <array>
 #include <cstdio>
 #include <cstdlib>
 #include <exception>

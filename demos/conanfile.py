@@ -26,7 +26,7 @@ class demos(ConanFile):
         self.tool_requires("libhal-cmake-util/1.0.0")
 
     def requirements(self):
-        self.requires("libhal-micromod/0.2.0")
+        self.requires("libhal-micromod/0.2.1")
         self.requires("libhal-util/[^3.0.0]")
 
     def layout(self):

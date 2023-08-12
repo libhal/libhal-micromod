@@ -19,7 +19,9 @@ project(libhal-micromod VERSION 0.0.1 LANGUAGES CXX)
 set(platform_library $ENV{LIBHAL_PLATFORM_LIBRARY})
 set(platform $ENV{LIBHAL_PLATFORM})
 
-message(WARNING "${platform_library}")
+message(NOTICE ">> 🔎 Building with CMake version: ${CMAKE_VERSION}")
+message(NOTICE ">> 🔎 Platform library = ${platform_library}")
+message(NOTICE ">> 🔎 Platform library = ${platform}")
 
 if("${platform_library}" STREQUAL "")
   message(FATAL_ERROR
