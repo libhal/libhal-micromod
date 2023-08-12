@@ -26,8 +26,8 @@ on:
     - cron: "0 12 * * 0"
 
 jobs:
-  build_lpc4078:
-    uses: libhal/ci/.github/workflows/demo_builder.yml@4.x.y
+  lpc4078:
+    uses: ./.github/workflows/deploy.yml
     with:
       profile: lpc4078
       processor_profile: https://github.com/libhal/libhal-armcortex.git
