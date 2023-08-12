@@ -23,13 +23,13 @@ hal::status application()
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
+  std::array<hal::byte, 64> console_buffer;
+
   auto& clock = hal::micromod::v1::uptime_clock();
-  auto& led = hal::micromod::v1::led();
+  auto& console = hal::micromod::v1::console(console_buffer);
 
   while (true) {
-    HAL_CHECK(led.level(true));
-    hal::delay(clock, 500ms);
-    HAL_CHECK(led.level(false));
+    hal::print(console, "Hello World\n");
     hal::delay(clock, 500ms);
   }
 

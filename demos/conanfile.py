@@ -26,7 +26,7 @@ class demos(ConanFile):
         self.tool_requires("libhal-cmake-util/1.0.0")
 
     def requirements(self):
-        self.requires("libhal-micromod/0.0.1")
+        self.requires("libhal-micromod/0.1.0")
         self.requires("libhal-util/[^3.0.0]")
 
     def layout(self):
@@ -34,6 +34,43 @@ class demos(ConanFile):
         cmake_layout(self, build_folder=platform_directory)
 
     def build(self):
-        cmake = CMake(self)
-        cmake.configure()
-        cmake.build()
+        demos = ["blinker", "hello_world", "console_loopback"]
+        statuses = []
+        for demo in demos:
+            cmake = CMake(self)
+            cmake.configure(variables={"LIBHAL_MICROMOD_DEMO": demo})
+            try:
+                cmake.build()
+                statuses.append({"demo_name": demo, "success": True})
+            except:
+                statuses.append({"demo_name": demo, "success": False})
+
+        banner = """\x1b[38;5;202m
+███╗   ███╗██╗ ██████╗██████╗  ██████╗ ███╗   ███╗ ██████╗ ██████╗
+████╗ ████║██║██╔════╝██╔══██╗██╔═══██╗████╗ ████║██╔═══██╗██╔══██╗
+██╔████╔██║██║██║     ██████╔╝██║   ██║██╔████╔██║██║   ██║██║  ██║
+██║╚██╔╝██║██║██║     ██╔══██╗██║   ██║██║╚██╔╝██║██║   ██║██║  ██║
+██║ ╚═╝ ██║██║╚██████╗██║  ██║╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██████╔╝
+╚═╝     ╚═╝╚═╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ """
+
+        banner2 = """\x1b[38;5;214m
+██████╗ ███████╗███╗   ███╗ ██████╗ ███████╗
+██╔══██╗██╔════╝████╗ ████║██╔═══██╗██╔════╝
+██║  ██║█████╗  ██╔████╔██║██║   ██║███████╗
+██║  ██║██╔══╝  ██║╚██╔╝██║██║   ██║╚════██║
+██████╔╝███████╗██║ ╚═╝ ██║╚██████╔╝███████║
+╚═════╝ ╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+\x1b[1;0m"""
+
+        print(banner,
+              banner2,
+              "\nDemos available for this MicroMod Profile "
+              f"({self.options.platform}):\n")
+
+        for status in statuses:
+            if status["success"]:
+                print(f"    ✅ {status['demo_name']}")
+            else:
+                print(f"    ❌ {status['demo_name']}")
+
+        print("")

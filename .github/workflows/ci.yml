@@ -18,7 +18,9 @@ on:
   workflow_dispatch:
   pull_request:
   release:
-    types: [published]
+    types:
+      - published
+      - deleted
   push:
     branches:
       - main
@@ -32,4 +34,11 @@ jobs:
       profile: lpc4078
       processor_profile: https://github.com/libhal/libhal-armcortex.git
       platform_profile: https://github.com/libhal/libhal-lpc40.git
+    secrets: inherit
+  stm32f103c8:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      profile: stm32f103c8
+      processor_profile: https://github.com/libhal/libhal-armcortex.git
+      platform_profile: https://github.com/libhal/libhal-stm32f1.git
     secrets: inherit

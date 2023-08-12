@@ -23,14 +23,19 @@ hal::status application()
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
+  std::array<hal::byte, 512> console_buffer;
+  std::array<hal::byte, 1> read_buffer;
+
   auto& clock = hal::micromod::v1::uptime_clock();
-  auto& led = hal::micromod::v1::led();
+  auto& console = hal::micromod::v1::console(console_buffer);
+
+  hal::print(console, "Anything sent will be echoed back> ");
 
   while (true) {
-    HAL_CHECK(led.level(true));
-    hal::delay(clock, 500ms);
-    HAL_CHECK(led.level(false));
-    hal::delay(clock, 500ms);
+    auto read_bytes = console.read(read_buffer).value().data;
+    if (read_bytes.size() > 0) {
+      HAL_CHECK(console.write(read_bytes));
+    }
   }
 
   return hal::success();

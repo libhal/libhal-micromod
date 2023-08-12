@@ -31,37 +31,53 @@ namespace hal::micromod::v1 {
 // =============================================================================
 // CORE
 // =============================================================================
+
 /**
- * @brief
+ * @brief Initialize the system
+ *
+ * Should be the first API called at the start of main. Typically sets up .data
+ * and .bss, heap sections if applicable, interrupt service routine handler and
+ * anything else necessary for code to function on the MCU.
  *
  */
 void initialize_platform();
 
 /**
- * @brief
+ * @brief steady clock to measures the cycles the processor has been up.
  *
- * @return hal::steady_clock&
+ * @return hal::steady_clock& - system uptime steady clock.
  */
 hal::steady_clock& uptime_clock();
 
 /**
- * @brief
+ * @brief Get core system timer driver
  *
- * @return hal::timer&
+ * Usually used as the system timer for the RTOS
+ *
+ * @return hal::timer& - reference to the timer
  */
 hal::timer& system_timer();
 
 /**
- * @brief
+ * @brief Enter power savings mode for your processor
  *
+ * Generally needs an interrupt to wake up the device from sleep
  */
 void enter_power_saving_mode();
 
 /**
- * @brief
+ * @brief Console serial interface
  *
- * @param p_receive_buffer
- * @return hal::serial&
+ * The console does not have to implement an actual serial communication
+ * protocol like, uart or rs232. It can be implemented with anything such as
+ * usb, i2c and spi, or something different. It just needs to follow the
+ * hal::serial interface for writing, reading bytes from the console.
+ *
+ * @param p_receive_buffer - The size of the receive buffer for the serial port.
+ * Note that subsequent calls to the function will ignore this parameter, thus
+ * the first call will set the receive buffer size. Ensure that the lifetime of
+ * the buffer is equal to or exceeds the lifetime of the console serial port.
+ * @return hal::serial& - serial interface to the console
  */
 hal::serial& console(std::span<hal::byte> p_receive_buffer);
 

@@ -20,18 +20,23 @@ set(platform_library $ENV{LIBHAL_PLATFORM_LIBRARY})
 set(platform $ENV{LIBHAL_PLATFORM})
 
 message(WARNING "${platform_library}")
+message(WARNING "${demo}")
 
 if("${platform_library}" STREQUAL "")
     message(FATAL_ERROR
         "Build environment variable LIBHAL_PLATFORM_LIBRARY is required for " "this project.")
 endif()
 
+if(NOT DEFINED LIBHAL_MICROMOD_DEMO)
+    message(FATAL_ERROR
+        "Build environment variable LIBHAL_MICROMOD_DEMO is required to "
+        "select the appropriate demo source file for this project.")
+endif()
+
 find_package(libhal-${platform_library} REQUIRED CONFIG)
 find_package(libhal-micromod REQUIRED CONFIG)
 find_package(libhal-util REQUIRED CONFIG)
 find_package(libhal REQUIRED CONFIG)
-
-set(DEMOS blinker)
 
 add_library(startup_code main.cpp)
 target_include_directories(startup_code PUBLIC .)
@@ -41,18 +46,16 @@ target_link_libraries(startup_code PRIVATE
     libhal::util
     libhal::libhal)
 
-foreach(demo IN LISTS DEMOS)
-    set(current_project ${demo}.elf)
-    message(STATUS "Generating Demo for \"${current_project}\"")
-    add_executable(${current_project} applications/${demo}.cpp)
-    target_include_directories(${current_project} PUBLIC .)
-    target_compile_features(${current_project} PRIVATE cxx_std_20)
-    target_link_libraries(${current_project} PRIVATE
-        libhal::micromod
-        libhal::util
-        libhal::libhal
-        libhal::${platform_library}
-        startup_code)
-    libhal_post_build(${current_project})
-    libhal_disassemble(${current_project})
-endforeach()
+set(current_project ${LIBHAL_MICROMOD_DEMO}.elf)
+message(STATUS "Generating Demo for \"${current_project}\"")
+add_executable(${current_project} applications/${LIBHAL_MICROMOD_DEMO}.cpp)
+target_include_directories(${current_project} PUBLIC .)
+target_compile_features(${current_project} PRIVATE cxx_std_20)
+target_link_libraries(${current_project} PRIVATE
+    libhal::micromod
+    libhal::util
+    libhal::libhal
+    libhal::${platform_library}
+    startup_code)
+libhal_post_build(${current_project})
+libhal_disassemble(${current_project})
