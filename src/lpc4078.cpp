@@ -193,157 +193,150 @@ pin_t& gpio()
   return driver;
 }
 
-namespace output {
-hal::output_pin& g0()
+hal::output_pin& output_g0()
 {
   return gpio<hal::lpc40::output_pin, 0>();
 }
-hal::output_pin& g1()
+hal::output_pin& output_g1()
 {
   return gpio<hal::lpc40::output_pin, 1>();
 }
-hal::output_pin& g2()
+hal::output_pin& output_g2()
 {
   return gpio<hal::lpc40::output_pin, 2>();
 }
-hal::output_pin& g3()
+hal::output_pin& output_g3()
 {
   return gpio<hal::lpc40::output_pin, 3>();
 }
-hal::output_pin& g4()
+hal::output_pin& output_g4()
 {
   return gpio<hal::lpc40::output_pin, 4>();
 }
-hal::output_pin& g5()
+hal::output_pin& output_g5()
 {
   return gpio<hal::lpc40::output_pin, 5>();
 }
-hal::output_pin& g6()
+hal::output_pin& output_g6()
 {
   return gpio<hal::lpc40::output_pin, 6>();
 }
-hal::output_pin& g7()
+hal::output_pin& output_g7()
 {
   return gpio<hal::lpc40::output_pin, 7>();
 }
-hal::output_pin& g8()
+hal::output_pin& output_g8()
 {
   return gpio<hal::lpc40::output_pin, 8>();
 }
-hal::output_pin& g9()
+hal::output_pin& output_g9()
 {
   return gpio<hal::lpc40::output_pin, 9>();
 }
-hal::output_pin& g10()
+hal::output_pin& output_g10()
 {
   return gpio<hal::lpc40::output_pin, 10>();
 }
-hal::output_pin& g11()
+hal::output_pin& output_g11()
 {
   return gpio<hal::lpc40::output_pin, 11>();
 }
-}  // namespace output
 
-namespace input {
-
-hal::input_pin& g0()
+hal::input_pin& input_g0()
 {
   return gpio<hal::lpc40::input_pin, 0>();
 }
-hal::input_pin& g1()
+hal::input_pin& input_g1()
 {
   return gpio<hal::lpc40::input_pin, 1>();
 }
-hal::input_pin& g2()
+hal::input_pin& input_g2()
 {
   return gpio<hal::lpc40::input_pin, 2>();
 }
-hal::input_pin& g3()
+hal::input_pin& input_g3()
 {
   return gpio<hal::lpc40::input_pin, 3>();
 }
-hal::input_pin& g4()
+hal::input_pin& input_g4()
 {
   return gpio<hal::lpc40::input_pin, 4>();
 }
-hal::input_pin& g5()
+hal::input_pin& input_g5()
 {
   return gpio<hal::lpc40::input_pin, 5>();
 }
-hal::input_pin& g6()
+hal::input_pin& input_g6()
 {
   return gpio<hal::lpc40::input_pin, 6>();
 }
-hal::input_pin& g7()
+hal::input_pin& input_g7()
 {
   return gpio<hal::lpc40::input_pin, 7>();
 }
-hal::input_pin& g8()
+hal::input_pin& input_g8()
 {
   return gpio<hal::lpc40::input_pin, 8>();
 }
-hal::input_pin& g9()
+hal::input_pin& input_g9()
 {
   return gpio<hal::lpc40::input_pin, 9>();
 }
-hal::input_pin& g10()
+hal::input_pin& input_g10()
 {
   return gpio<hal::lpc40::input_pin, 10>();
 }
-hal::input_pin& g11()
+hal::input_pin& input_g11()
 {
   return gpio<hal::lpc40::input_pin, 11>();
 }
-}  // namespace input
 
-namespace interrupt {
-hal::interrupt_pin& g0()
+hal::interrupt_pin& interrupt_g0()
 {
   return gpio<hal::lpc40::interrupt_pin, 0>();
 }
-hal::interrupt_pin& g1()
+hal::interrupt_pin& interrupt_g1()
 {
   return gpio<hal::lpc40::interrupt_pin, 1>();
 }
-hal::interrupt_pin& g2()
+hal::interrupt_pin& interrupt_g2()
 {
   return gpio<hal::lpc40::interrupt_pin, 2>();
 }
-hal::interrupt_pin& g3()
+hal::interrupt_pin& interrupt_g3()
 {
   return gpio<hal::lpc40::interrupt_pin, 3>();
 }
-hal::interrupt_pin& g4()
+hal::interrupt_pin& interrupt_g4()
 {
   return gpio<hal::lpc40::interrupt_pin, 4>();
 }
-hal::interrupt_pin& g5()
+hal::interrupt_pin& interrupt_g5()
 {
   return gpio<hal::lpc40::interrupt_pin, 5>();
 }
-hal::interrupt_pin& g6()
+hal::interrupt_pin& interrupt_g6()
 {
   return gpio<hal::lpc40::interrupt_pin, 6>();
 }
-hal::interrupt_pin& g7()
+hal::interrupt_pin& interrupt_g7()
 {
   return gpio<hal::lpc40::interrupt_pin, 7>();
 }
-hal::interrupt_pin& g8()
+hal::interrupt_pin& interrupt_g8()
 {
   return gpio<hal::lpc40::interrupt_pin, 8>();
 }
-hal::interrupt_pin& g9()
+hal::interrupt_pin& interrupt_g9()
 {
   return gpio<hal::lpc40::interrupt_pin, 9>();
 }
-hal::interrupt_pin& g10()
+hal::interrupt_pin& interrupt_g10()
 {
   return gpio<hal::lpc40::interrupt_pin, 10>();
 }
-hal::interrupt_pin& g11()
+hal::interrupt_pin& interrupt_g11()
 {
   return gpio<hal::lpc40::interrupt_pin, 11>();
 }
-}  // namespace interrupt
 }  // namespace hal::micromod::v1

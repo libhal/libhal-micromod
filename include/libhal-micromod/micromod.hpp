@@ -247,45 +247,39 @@ hal::can& can();
 // DIGITAL
 // =============================================================================
 
-namespace output {
-hal::output_pin& g0();
-hal::output_pin& g1();
-hal::output_pin& g2();
-hal::output_pin& g3();
-hal::output_pin& g4();
-hal::output_pin& g5();
-hal::output_pin& g6();
-hal::output_pin& g7();
-hal::output_pin& g8();
-hal::output_pin& g9();
-hal::output_pin& g10();
-}  // namespace output
+hal::output_pin& output_g0();
+hal::output_pin& output_g1();
+hal::output_pin& output_g2();
+hal::output_pin& output_g3();
+hal::output_pin& output_g4();
+hal::output_pin& output_g5();
+hal::output_pin& output_g6();
+hal::output_pin& output_g7();
+hal::output_pin& output_g8();
+hal::output_pin& output_g9();
+hal::output_pin& output_g10();
 
-namespace input {
-hal::input_pin& g0();
-hal::input_pin& g1();
-hal::input_pin& g2();
-hal::input_pin& g3();
-hal::input_pin& g4();
-hal::input_pin& g5();
-hal::input_pin& g6();
-hal::input_pin& g7();
-hal::input_pin& g8();
-hal::input_pin& g9();
-hal::input_pin& g10();
-}  // namespace input
+hal::input_pin& input_g0();
+hal::input_pin& input_g1();
+hal::input_pin& input_g2();
+hal::input_pin& input_g3();
+hal::input_pin& input_g4();
+hal::input_pin& input_g5();
+hal::input_pin& input_g6();
+hal::input_pin& input_g7();
+hal::input_pin& input_g8();
+hal::input_pin& input_g9();
+hal::input_pin& input_g10();
 
-namespace interrupt {
-hal::interrupt_pin& g0();
-hal::interrupt_pin& g1();
-hal::interrupt_pin& g2();
-hal::interrupt_pin& g3();
-hal::interrupt_pin& g4();
-hal::interrupt_pin& g5();
-hal::interrupt_pin& g6();
-hal::interrupt_pin& g7();
-hal::interrupt_pin& g8();
-hal::interrupt_pin& g9();
-hal::interrupt_pin& g10();
-}  // namespace interrupt
+hal::interrupt_pin& interrupt_g0();
+hal::interrupt_pin& interrupt_g1();
+hal::interrupt_pin& interrupt_g2();
+hal::interrupt_pin& interrupt_g3();
+hal::interrupt_pin& interrupt_g4();
+hal::interrupt_pin& interrupt_g5();
+hal::interrupt_pin& interrupt_g6();
+hal::interrupt_pin& interrupt_g7();
+hal::interrupt_pin& interrupt_g8();
+hal::interrupt_pin& interrupt_g9();
+hal::interrupt_pin& interrupt_g10();
 }  // namespace hal::micromod::v1

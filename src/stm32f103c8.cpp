@@ -72,44 +72,20 @@ pin_t& gpio()
   return driver;
 }
 
-namespace output {
-hal::output_pin& g0()
+hal::output_pin& output_g0()
 {
   return gpio<hal::stm32f1::output_pin, 0>();
 }
-hal::output_pin& g1()
+hal::output_pin& output_g1()
 {
   return gpio<hal::stm32f1::output_pin, 1>();
 }
-hal::output_pin& g2()
+hal::output_pin& output_g2()
 {
   return gpio<hal::stm32f1::output_pin, 2>();
 }
-hal::output_pin& g3()
+hal::output_pin& output_g3()
 {
   return gpio<hal::stm32f1::output_pin, 3>();
 }
-}  // namespace output
-
-#if 0
-hal::serial& console(std::span<hal::byte> p_receive_buffer);
-hal::output_pin& led();
-hal::adc& a0();
-hal::adc& a1();
-hal::adc& battery();
-hal::dac& d0();
-hal::dac& d1();
-hal::pwm& pwm0();
-hal::pwm& pwm1();
-hal::i2c& i2c();
-hal::interrupt_pin& i2c_interrupt_pin();
-hal::i2c& i2c1();
-hal::spi& spi();
-hal::output_pin& spi_cs();
-hal::spi& spi1();
-hal::output_pin& spi1_cs();
-hal::serial& uart1(std::span<hal::byte> p_buffer);
-hal::serial& uart2(std::span<hal::byte> p_buffer);
-hal::can& can();
-#endif
 }  // namespace hal::micromod::v1

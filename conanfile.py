@@ -25,7 +25,7 @@ required_conan_version = ">=2.0.6"
 
 class libhal_micromod_conan(ConanFile):
     name = "libhal-micromod"
-    version = "0.1.0"
+    version = "0.2.0"
     license = "Apache-2.0"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/libhal/libhal-micromod"
