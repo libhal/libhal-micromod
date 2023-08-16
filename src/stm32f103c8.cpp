@@ -13,10 +13,8 @@ namespace hal::micromod::v1 {
 void initialize_platform()
 {
   using namespace hal::literals;
-  constexpr hertz crystal_frequency = 12.0_MHz;
+  [[maybe_unused]] constexpr hertz crystal_frequency = 12.0_MHz;
 
-  hal::cortex_m::initialize_data_section();
-  hal::cortex_m::initialize_floating_point_unit();
   hal::cortex_m::interrupt::initialize<hal::value(hal::stm32f1::irq::max)>();
   // hal::stm32f1::configure_clocks();
 }

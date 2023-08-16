@@ -22,8 +22,6 @@ void initialize_platform()
   using namespace hal::literals;
   constexpr hertz crystal_frequency = 10.0_MHz;
 
-  hal::cortex_m::initialize_data_section();
-  hal::cortex_m::initialize_floating_point_unit();
   hal::cortex_m::interrupt::initialize<hal::value(hal::lpc40::irq::max)>();
   hal::lpc40::clock::maximum(crystal_frequency);
 }
