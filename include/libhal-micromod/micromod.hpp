@@ -99,6 +99,9 @@ hal::serial& console(std::span<hal::byte> p_receive_buffer);
 /**
  * @brief Driver for the board LED output pin
  *
+ * If this output pin level is called with TRUE, the LED must be ON.
+ * If this output pin level is called with FALSE, the LED must be OFF.
+ *
  * @return hal::output_pin& - Statically allocated output pin driver connected
  * to the LED.
  */
