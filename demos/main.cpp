@@ -12,17 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <libhal-micromod/micromod.hpp>
-
-#include <array>
-#include <cstdio>
-#include <cstdlib>
-#include <exception>
-#include <sys/stat.h>
-#include <unistd.h>
-
 #include <libhal-armcortex/startup.hpp>
 #include <libhal-armcortex/system_control.hpp>
+#include <libhal-micromod/micromod.hpp>
 #include <libhal/error.hpp>
 
 hal::status application();

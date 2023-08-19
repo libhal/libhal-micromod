@@ -26,7 +26,6 @@ hal::status application()
   std::array<hal::byte, 512> console_buffer;
   std::array<hal::byte, 1> read_buffer;
 
-  auto& clock = hal::micromod::v1::uptime_clock();
   auto& console = hal::micromod::v1::console(console_buffer);
 
   hal::print(console, "Anything sent will be echoed back> ");
