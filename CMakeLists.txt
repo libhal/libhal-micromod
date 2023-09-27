@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.15)
 
-project(libhal-micromod VERSION 0.0.1 LANGUAGES CXX)
+project(libhal-micromod LANGUAGES CXX)
 
 set(platform_library $ENV{LIBHAL_PLATFORM_LIBRARY})
 set(platform $ENV{LIBHAL_PLATFORM})
@@ -25,17 +25,19 @@ message(NOTICE ">> 🔎 Platform library = ${platform}")
 
 if("${platform_library}" STREQUAL "")
   message(FATAL_ERROR
-    "Build environment variable LIBHAL_PLATFORM_LIBRARY is required for " "this project.")
+    "Build environment variable LIBHAL_PLATFORM_LIBRARY is required for "
+    "this project.")
 endif()
 
-find_package(libhal-${platform_library} REQUIRED CONFIG)
+libhal_make_library(
+  LIBRARY_NAME libhal-micromod
 
-add_library(libhal-micromod src/${platform}.cpp)
-target_include_directories(libhal-micromod PUBLIC include)
-target_compile_features(libhal-micromod PRIVATE cxx_std_20)
-target_compile_options(libhal-micromod PRIVATE -Wall -Wextra)
-target_link_libraries(libhal-micromod PRIVATE
+  SOURCES
+  src/${platform}.cpp
+
+  PACKAGES
+  libhal-${platform_library}
+
+  LINK_LIBRARIES
   libhal::${platform_library}
 )
-
-install(TARGETS libhal-micromod)
