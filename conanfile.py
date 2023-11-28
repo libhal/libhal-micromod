@@ -25,7 +25,7 @@ required_conan_version = ">=2.0.6"
 
 class libhal_micromod_conan(ConanFile):
     name = "libhal-micromod"
-    version = "0.2.2"
+    version = "0.2.3"
     license = "Apache-2.0"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/libhal/libhal-micromod"
@@ -60,14 +60,14 @@ class libhal_micromod_conan(ConanFile):
 
     def build_requirements(self):
         self.tool_requires("cmake/3.27.1")
-        self.tool_requires("libhal-cmake-util/1.2.0")
+        self.tool_requires("libhal-cmake-util/3.0.1")
 
     def requirements(self):
         platform_str = str(self.options.platform)
         if platform_str == "lpc4078":
-            self.requires("libhal-lpc40/2.1.3")
+            self.requires("libhal-lpc40/2.1.5", transitive_headers=True)
         elif platform_str == "stm32f103c8":
-            self.requires("libhal-stm32f1/2.0.3")
+            self.requires("libhal-stm32f1/2.0.5", transitive_headers=True)
         else:
             raise ConanInvalidConfiguration(
                 f"Platform {platform_str} not supported!")
