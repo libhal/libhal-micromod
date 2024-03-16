@@ -18,7 +18,7 @@
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
-hal::status application()
+void application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
@@ -27,11 +27,9 @@ hal::status application()
   auto& led = hal::micromod::v1::led();
 
   while (true) {
-    HAL_CHECK(led.level(true));
+    led.level(true);
     hal::delay(clock, 500ms);
-    HAL_CHECK(led.level(false));
+    led.level(false);
     hal::delay(clock, 500ms);
   }
-
-  return hal::success();
 }

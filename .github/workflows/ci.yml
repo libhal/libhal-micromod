@@ -17,10 +17,6 @@ name: ✅ CI
 on:
   workflow_dispatch:
   pull_request:
-  release:
-    types:
-      - published
-      - deleted
   push:
     branches:
       - main
@@ -28,17 +24,25 @@ on:
     - cron: "0 12 * * 0"
 
 jobs:
-  lpc4078:
-    uses: ./.github/workflows/deploy.yml
-    with:
-      profile: lpc4078
-      processor_profile: https://github.com/libhal/libhal-armcortex.git
-      platform_profile: https://github.com/libhal/libhal-lpc40.git
+  ci:
+    uses: libhal/ci/.github/workflows/library_check.yml@5.x.y
     secrets: inherit
-  stm32f103c8:
-    uses: ./.github/workflows/deploy.yml
+
+  deploy_cortex-m4f_check:
+    uses: libhal/ci/.github/workflows/deploy.yml@5.x.y
     with:
-      profile: stm32f103c8
-      processor_profile: https://github.com/libhal/libhal-armcortex.git
-      platform_profile: https://github.com/libhal/libhal-stm32f1.git
+      arch: cortex-m4f
+      os: baremetal
+      compiler: gcc
+      compiler_version: 12.3
+      compiler_package: arm-gnu-toolchain
+    secrets: inherit
+
+  demo_check:
+    uses: libhal/ci/.github/workflows/demo_builder.yml@5.x.y
+    with:
+      compiler_profile_url: https://github.com/libhal/arm-gnu-toolchain.git
+      compiler_profile: v1/arm-gcc-12.3
+      platform_profile_url: https://github.com/libhal/libhal-lpc40.git
+      platform_profile: v2/lpc4078
     secrets: inherit

@@ -12,31 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <libhal-armcortex/startup.hpp>
-#include <libhal-armcortex/system_control.hpp>
 #include <libhal-micromod/micromod.hpp>
 #include <libhal/error.hpp>
 
-hal::status application();
+extern void application();
 
 int main()
 {
   hal::micromod::v1::initialize_platform();
-
-  auto is_finished = application();
-
-  if (!is_finished) {
-    hal::micromod::v1::reset();
-  } else {
-    hal::halt();
-  }
-
+  application();
+  hal::micromod::v1::reset();
   return 0;
 }
-
-namespace boost {
-void throw_exception([[maybe_unused]] std::exception const& e)
-{
-  hal::micromod::v1::reset();
-}
-}  // namespace boost

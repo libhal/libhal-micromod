@@ -34,7 +34,7 @@ void reset()
 
 hal::output_pin& led()
 {
-  static auto driver = hal::stm32f1::output_pin::get('C', 13).value();
+  static hal::stm32f1::output_pin driver('C', 13);
   return driver;
 }
 

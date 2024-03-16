@@ -23,14 +23,13 @@ void initialize_platform()
   constexpr hertz crystal_frequency = 10.0_MHz;
 
   hal::cortex_m::interrupt::initialize<hal::value(hal::lpc40::irq::max)>();
-  hal::lpc40::clock::maximum(crystal_frequency);
+  hal::lpc40::maximum(crystal_frequency);
 }
 
 hal::steady_clock& uptime_clock()
 {
-  auto& clock = hal::lpc40::clock::get();
-  const auto cpu_frequency = clock.get_frequency(hal::lpc40::peripheral::cpu);
-  static hal::cortex_m::dwt_counter steady_clock(cpu_frequency);
+  static hal::cortex_m::dwt_counter steady_clock(
+    hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu));
   return steady_clock;
 }
 
@@ -42,31 +41,31 @@ void reset()
 
 hal::serial& console(std::span<hal::byte> p_receive_buffer)
 {
-  static auto driver = hal::lpc40::uart::get(0, p_receive_buffer, {}).value();
+  static hal::lpc40::uart driver(0, p_receive_buffer, {});
   return driver;
 }
 
 hal::output_pin& led()
 {
-  static auto driver = hal::lpc40::output_pin::get(1, 10).value();
+  static hal::lpc40::output_pin driver(1, 10);
   return driver;
 }
 
 hal::adc& a0()
 {
-  static auto driver = hal::lpc40::adc::get(5).value();
+  static hal::lpc40::adc driver(hal::channel<5>);
   return driver;
 }
 
 hal::adc& a1()
 {
-  static auto driver = hal::lpc40::adc::get(4).value();
+  static hal::lpc40::adc driver(hal::channel<4>);
   return driver;
 }
 
 hal::adc& battery()
 {
-  static auto driver = hal::lpc40::adc::get(2).value();
+  static hal::lpc40::adc driver(hal::channel<2>);
   return driver;
 }
 
@@ -77,31 +76,31 @@ hal::dac& d1();
 
 hal::pwm& pwm0()
 {
-  static auto driver = hal::lpc40::pwm::get(1, 6).value();
+  static hal::lpc40::pwm driver(1, 6);
   return driver;
 }
 
 hal::pwm& pwm1()
 {
-  static auto driver = hal::lpc40::pwm::get(1, 5).value();
+  static hal::lpc40::pwm driver(1, 5);
   return driver;
 }
 
 hal::i2c& i2c()
 {
-  static auto driver = hal::lpc40::i2c::get(2).value();
+  static hal::lpc40::i2c driver(2);
   return driver;
 }
 
 hal::interrupt_pin& i2c_interrupt_pin()
 {
-  static auto driver = hal::lpc40::interrupt_pin::get(2, 6).value();
+  static hal::lpc40::interrupt_pin driver(2, 6);
   return driver;
 }
 
 hal::i2c& i2c1()
 {
-  static auto driver = hal::lpc40::i2c::get(1).value();
+  static hal::lpc40::i2c driver(1);
   return driver;
 }
 
@@ -111,7 +110,7 @@ hal::spi& spi();
 
 hal::output_pin& spi_cs()
 {
-  static auto driver = hal::lpc40::output_pin::get(1, 8).value();
+  static hal::lpc40::output_pin driver(1, 8);
   return driver;
 }
 
@@ -121,25 +120,25 @@ hal::spi& spi1();
 
 hal::output_pin& spi1_cs()
 {
-  static auto driver = hal::lpc40::output_pin::get(0, 16).value();
+  static hal::lpc40::output_pin driver(0, 16);
   return driver;
 }
 
 hal::serial& uart1(std::span<hal::byte> p_buffer)
 {
-  static auto driver = hal::lpc40::uart::get(1, p_buffer, {}).value();
+  static hal::lpc40::uart driver(1, p_buffer, {});
   return driver;
 }
 
 hal::serial& uart2(std::span<hal::byte> p_buffer)
 {
-  static auto driver = hal::lpc40::uart::get(3, p_buffer, {}).value();
+  static hal::lpc40::uart driver(3, p_buffer, {});
   return driver;
 }
 
 hal::can& can()
 {
-  static auto driver = hal::lpc40::can::get(2).value();
+  static hal::lpc40::can driver(2);
   return driver;
 }
 

@@ -18,7 +18,7 @@
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
-hal::status application()
+void application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
@@ -32,6 +32,4 @@ hal::status application()
     hal::print(console, "Hello World\n");
     hal::delay(clock, 500ms);
   }
-
-  return hal::success();
 }

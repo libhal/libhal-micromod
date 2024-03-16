@@ -23,12 +23,6 @@ message(NOTICE ">> 🔎 Building with CMake version: ${CMAKE_VERSION}")
 message(NOTICE ">> 🔎 Platform library = ${platform_library}")
 message(NOTICE ">> 🔎 Platform library = ${platform}")
 
-if("${platform_library}" STREQUAL "")
-  message(FATAL_ERROR
-    "Build environment variable LIBHAL_PLATFORM_LIBRARY is required for "
-    "this project.")
-endif()
-
 libhal_make_library(
   LIBRARY_NAME libhal-micromod
 

@@ -18,21 +18,17 @@ from conan.tools.cmake import CMake, cmake_layout
 
 class demos(ConanFile):
     settings = "compiler", "build_type", "os", "arch"
-    generators = "CMakeToolchain", "CMakeDeps", "VirtualBuildEnv"
+    # generators = "CMakeToolchain", "CMakeDeps", "VirtualBuildEnv"
     options = {"platform": ["ANY"]}
     default_options = {"platform": "unspecified"}
 
-    def build_requirements(self):
-        self.tool_requires("cmake/3.27.1")
-        self.tool_requires("libhal-cmake-util/1.0.0")
+    python_requires = "libhal-bootstrap/[^1.0.0]"
+    python_requires_extend = "libhal-bootstrap.demo"
 
     def requirements(self):
-        self.requires("libhal-micromod/0.2.3")
-        self.requires("libhal-util/[^3.0.1]")
-
-    def layout(self):
-        platform_directory = "build/" + str(self.options.platform)
-        cmake_layout(self, build_folder=platform_directory)
+        bootstrap = self.python_requires["libhal-bootstrap"]
+        bootstrap.module.add_demo_requirements(self)
+        self.requires("libhal-micromod/[^1.0.0 || latest]")
 
     def build(self):
         demos = ["blinker", "hello_world", "console_loopback"]
