@@ -14,10 +14,13 @@
 
 #pragma once
 
+#include <array>
+
 #include <libhal/adc.hpp>
 #include <libhal/can.hpp>
 #include <libhal/dac.hpp>
 #include <libhal/i2c.hpp>
+#include <libhal/initializers.hpp>
 #include <libhal/input_pin.hpp>
 #include <libhal/interrupt_pin.hpp>
 #include <libhal/output_pin.hpp>
@@ -70,7 +73,7 @@ void enter_power_saving_mode();
  *
  * The console does not have to implement an actual serial communication
  * protocol like, uart or rs232. It can be implemented with anything such as
- * usb, i2c and spi, or something different. It just needs to follow the
+ * usb, i2c, spi, usb or something different. It just needs to follow the
  * hal::serial interface for writing, reading bytes from the console.
  *
  * @param p_receive_buffer - The size of the receive buffer for the serial port.
@@ -82,7 +85,42 @@ void enter_power_saving_mode();
 hal::serial& console(std::span<hal::byte> p_receive_buffer);
 
 /**
- * @brief Resets the microcontroller, restarting the program in the process.
+ * @brief Retrieve a serial console with a statically allocated receive buffer
+ *
+ * This helper functions creates a statically allocated buffer based on the
+ * buffer parameter passed. The lifetime of this buffer will exist for the
+ * duration of the application.
+ *
+ * USAGE:
+ *
+ *      auto& console = hal::micromod::v1::console(hal::buffer<128>);
+ *
+ * Ensure that your application only calls this function once. The console only
+ * gets constructed once for the duration of the application, meaning it can
+ * only set its internal buffer once. Each call to console will return the
+ * already constructed object. Subsequent calls to this function with differing
+ * values will create unique receive buffers that go unused. This is a compile
+ * time memory leak, because those statically allocated buffers will be
+ * inaccessible.
+ *
+ * If you need to retrieve the console again after the first call, call the
+ * console function like so:
+ *
+ *      auto& console = hal::micromod::v1::console({});  // empty span
+ *
+ * @param p_receive_buffer_size - target size of the console receive buffer
+ * @return hal::serial& - serial interface to the console
+ */
+inline hal::serial& console(hal::buffer_param auto p_receive_buffer_size)
+{
+  static_assert(p_receive_buffer_size() > 0,
+                "Console receive buffer must be greater than 0.");
+  static std::array<hal::byte, p_receive_buffer_size()> receive_buffer{};
+  return console(receive_buffer);
+}
+
+/**
+ * @brief Resets the micro-controller, restarting the program in the process.
  *
  * If the application is executed as a program or process on operating system
  * then this function should exit() with the code TBD which will alert the
@@ -203,17 +241,16 @@ hal::spi& spi();
 /**
  * @brief Driver for spi interrupt pin
  *
- * NOTE: that this pin can be used as an interrupt pin for both or either spi
- * ports.
+ * NOTE: that this pin can be used as an interrupt pin one or both spi ports.
  *
- * @return hal::interrupt_pin&
+ * @return hal::interrupt_pin& - interrupt pin for spi activity
  */
 hal::interrupt_pin& spi_interrupt_pin();
 
 /**
  * @brief Driver for the alternative spi port 1
  *
- * @return hal::spi&
+ * @return hal::spi& - spi port 1
  */
 hal::spi& spi1();
 
@@ -224,7 +261,7 @@ hal::spi& spi1();
  * Note that subsequent calls to the function will ignore this parameter, thus
  * the first call will set the receive buffer size. Ensure that the lifetime of
  * the buffer is equal to or exceeds the lifetime of the uart port.
- * @return hal::serial&
+ * @return hal::serial& - uart port 1
  */
 hal::serial& uart1(std::span<hal::byte> p_receive_buffer);
 
@@ -235,14 +272,14 @@ hal::serial& uart1(std::span<hal::byte> p_receive_buffer);
  * Note that subsequent calls to the function will ignore this parameter, thus
  * the first call will set the receive buffer size. Ensure that the lifetime of
  * the buffer is equal to or exceeds the lifetime of the uart port.
- * @return hal::serial&
+ * @return hal::serial& - uart port 2
  */
 hal::serial& uart2(std::span<hal::byte> p_receive_buffer);
 
 /**
- * @brief Driver for the can bus
+ * @brief can bus driver
  *
- * @return hal::can& - statically allocated can driver
+ * @return hal::can& - can driver
  */
 hal::can& can();
 

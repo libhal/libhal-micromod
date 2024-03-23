@@ -18,24 +18,21 @@
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
-hal::status application()
+void application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
-  std::array<hal::byte, 512> console_buffer;
   std::array<hal::byte, 1> read_buffer;
 
-  auto& console = hal::micromod::v1::console(console_buffer);
+  auto& console = hal::micromod::v1::console(hal::buffer<128>);
 
   hal::print(console, "Anything sent will be echoed back> ");
 
   while (true) {
-    auto read_bytes = console.read(read_buffer).value().data;
+    auto read_bytes = console.read(read_buffer).data;
     if (read_bytes.size() > 0) {
-      HAL_CHECK(console.write(read_bytes));
+      console.write(read_bytes);
     }
   }
-
-  return hal::success();
 }

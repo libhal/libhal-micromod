@@ -4,8 +4,12 @@
 #include <libhal-armcortex/interrupt.hpp>
 #include <libhal-armcortex/startup.hpp>
 #include <libhal-armcortex/system_control.hpp>
+#include <libhal-stm32f1/can.hpp>
 #include <libhal-stm32f1/clock.hpp>
+#include <libhal-stm32f1/input_pin.hpp>
 #include <libhal-stm32f1/output_pin.hpp>
+#include <libhal-stm32f1/pin.hpp>
+#include <libhal-stm32f1/uart.hpp>
 #include <libhal-util/enum.hpp>
 
 namespace hal::micromod::v1 {
@@ -13,10 +17,7 @@ namespace hal::micromod::v1 {
 void initialize_platform()
 {
   using namespace hal::literals;
-  [[maybe_unused]] constexpr hertz crystal_frequency = 12.0_MHz;
-
-  hal::cortex_m::interrupt::initialize<hal::value(hal::stm32f1::irq::max)>();
-  // hal::stm32f1::configure_clocks();
+  hal::stm32f1::maximum_speed_using_internal_oscillator();
 }
 
 hal::steady_clock& uptime_clock()
@@ -34,7 +35,19 @@ void reset()
 
 hal::output_pin& led()
 {
-  static auto driver = hal::stm32f1::output_pin::get('C', 13).value();
+  static hal::stm32f1::output_pin driver('C', 13);
+  return driver;
+}
+
+hal::serial& console(std::span<hal::byte> p_receive_buffer)
+{
+  static hal::stm32f1::uart driver(hal::runtime{}, 1, p_receive_buffer, {});
+  return driver;
+}
+
+hal::can& can()
+{
+  static hal::stm32f1::can driver({}, hal::stm32f1::can_pins::pb9_pb8);
   return driver;
 }
 
@@ -49,12 +62,22 @@ constexpr pin_map get_pin_map()
 {
   switch (gpio_pin) {
     case 0:
-      return pin_map{ .port = 'B', .pin = 4 };
+      return pin_map{ .port = 'A', .pin = 0 };
     case 1:
-      return pin_map{ .port = 'B', .pin = 3 };
-    case 2:
       return pin_map{ .port = 'A', .pin = 15 };
+    case 2:
+      return pin_map{ .port = 'B', .pin = 3 };
     case 3:
+      return pin_map{ .port = 'B', .pin = 4 };
+    case 4:
+      return pin_map{ .port = 'B', .pin = 12 };
+    case 5:
+      return pin_map{ .port = 'B', .pin = 13 };
+    case 6:
+      return pin_map{ .port = 'B', .pin = 14 };
+    case 7:
+      return pin_map{ .port = 'B', .pin = 15 };
+    case 8:
       return pin_map{ .port = 'C', .pin = 13 };
     default:
       // Will cause pin drivers to emit an error & crash if given a port above 3
@@ -62,11 +85,11 @@ constexpr pin_map get_pin_map()
   }
 }
 
-template<class pin_t, std::uint8_t gpio_pin>
-pin_t& gpio()
+template<class gpio_t, std::uint8_t gpio_pin>
+gpio_t& gpio()
 {
   constexpr auto pin = get_pin_map<gpio_pin>();
-  static auto driver = pin_t::get(pin.port, pin.pin).value();
+  static gpio_t driver(pin.port, pin.pin);
   return driver;
 }
 

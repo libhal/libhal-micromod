@@ -16,18 +16,22 @@
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
+volatile bool should_terminate = true;
+
 void application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
   auto& clock = hal::micromod::v1::uptime_clock();
-  auto& led = hal::micromod::v1::led();
+  auto& console = hal::micromod::v1::console(hal::buffer<16>);
+  hal::print(console,
+             "This application invokes the terminate handler by throwing an "
+             "uncaught exception.\n");
+  hal::print(console, "Waiting 5 seconds before throwing an exception...\n");
+  hal::delay(clock, 5s);
 
-  while (true) {
-    led.level(true);
-    hal::delay(clock, 500ms);
-    led.level(false);
-    hal::delay(clock, 500ms);
+  if (should_terminate) {
+    throw 5;
   }
 }

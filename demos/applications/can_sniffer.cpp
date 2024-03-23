@@ -14,20 +14,31 @@
 
 #include <libhal-micromod/micromod.hpp>
 #include <libhal-util/serial.hpp>
-#include <libhal-util/steady_clock.hpp>
+#include <libhal/units.hpp>
 
 void application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
-  auto& clock = hal::micromod::v1::uptime_clock();
-  auto& led = hal::micromod::v1::led();
+  auto& can = hal::micromod::v1::can();
+  auto& console = hal::micromod::v1::console(hal::buffer<64>);
+
+  hal::print(console, "Waiting for CAN messages...\n");
+
+  can.on_receive([&console](const hal::can::message_t& p_message) {
+    hal::print<64>(console, "{ ");
+    hal::print<64>(console, "id = %lu, ", p_message.id);
+    hal::print<64>(console, "length = %lu, ", p_message.length);
+    hal::print(console, "payload = { ");
+    for (const auto& data : std::span<const hal::byte>(p_message.payload)
+                              .first(p_message.length)) {
+      hal::print<8>(console, "0x%02X, ", data);
+    }
+    hal::print<64>(console, "}\n");
+  });
 
   while (true) {
-    led.level(true);
-    hal::delay(clock, 500ms);
-    led.level(false);
-    hal::delay(clock, 500ms);
+    continue;
   }
 }
