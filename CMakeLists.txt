@@ -16,24 +16,29 @@ cmake_minimum_required(VERSION 3.15)
 
 project(libhal-micromod LANGUAGES CXX)
 
-set(platform_library $ENV{LIBHAL_PLATFORM_LIBRARY})
-set(platform $ENV{LIBHAL_PLATFORM})
+set(platform_library ${LIBHAL_PLATFORM_LIBRARY})
+set(micromod_board ${LIBHAL_MICROMOD_BOARD})
 
-message(NOTICE ">> 🔎 Building with CMake version: ${CMAKE_VERSION}")
 message(NOTICE ">> 🔎 Platform library = ${platform_library}")
-message(NOTICE ">> 🔎 Platform library = ${platform}")
+message(NOTICE ">> 🔎 MicroMod Board = ${micromod_board}")
 
 if("${platform_library}" STREQUAL "")
   message(FATAL_ERROR
     "Build environment variable LIBHAL_PLATFORM_LIBRARY is required for "
-    "this project.")
+    "this package.")
+endif()
+
+if("${micromod_board}" STREQUAL "")
+  message(FATAL_ERROR
+    "Build environment variable LIBHAL_MICROMOD_BOARD is required for "
+    "this package.")
 endif()
 
 libhal_make_library(
   LIBRARY_NAME libhal-micromod
 
   SOURCES
-  src/${platform}.cpp
+  src/${micromod_board}.cpp
 
   PACKAGES
   libhal-${platform_library}

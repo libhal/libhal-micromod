@@ -12,26 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <array>
-
 #include <libhal-micromod/micromod.hpp>
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
-hal::status application()
+void application()
 {
   using namespace std::chrono_literals;
   using namespace hal::literals;
 
-  std::array<hal::byte, 64> console_buffer;
-
   auto& clock = hal::micromod::v1::uptime_clock();
-  auto& console = hal::micromod::v1::console(console_buffer);
+  auto& console = hal::micromod::v1::console(hal::buffer<16>);
 
   while (true) {
     hal::print(console, "Hello World\n");
     hal::delay(clock, 500ms);
   }
-
-  return hal::success();
 }

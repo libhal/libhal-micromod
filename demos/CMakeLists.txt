@@ -16,48 +16,17 @@ cmake_minimum_required(VERSION 3.20)
 
 project(demos LANGUAGES CXX)
 
-set(platform_library $ENV{LIBHAL_PLATFORM_LIBRARY})
-set(platform $ENV{LIBHAL_PLATFORM})
+libhal_build_demos(
+    DEMOS
+    blinker
+    console_loopback
+    hello_world
+    can_sniffer
+    terminate
 
-message(WARNING "${platform_library}")
-message(WARNING "${demo}")
+    PACKAGES
+    libhal-micromod
 
-if("${platform_library}" STREQUAL "")
-    message(FATAL_ERROR
-        "Build environment variable LIBHAL_PLATFORM_LIBRARY is required for " "this project.")
-endif()
-
-if(NOT DEFINED LIBHAL_MICROMOD_DEMO)
-    message(FATAL_ERROR
-        "Build environment variable LIBHAL_MICROMOD_DEMO is required to "
-        "select the appropriate demo source file for this project.")
-endif()
-
-find_package(libhal-${platform_library} REQUIRED CONFIG)
-find_package(libhal-micromod REQUIRED CONFIG)
-find_package(libhal-util REQUIRED CONFIG)
-find_package(libhal REQUIRED CONFIG)
-
-add_library(startup_code main.cpp)
-target_include_directories(startup_code PUBLIC .)
-target_compile_features(startup_code PRIVATE cxx_std_20)
-target_link_libraries(startup_code PRIVATE
+    LINK_LIBRARIES
     libhal::micromod
-    libhal::util
-    libhal::libhal)
-
-set(current_project ${LIBHAL_MICROMOD_DEMO}.elf)
-message(STATUS "Generating Demo for \"${current_project}\"")
-add_executable(${current_project} applications/${LIBHAL_MICROMOD_DEMO}.cpp)
-target_include_directories(${current_project} PUBLIC .)
-target_compile_features(${current_project} PRIVATE cxx_std_20)
-
-target_link_options(${current_project} PRIVATE --oslib=semihost --crt0=minimal)
-target_link_libraries(${current_project} PRIVATE
-    libhal::micromod
-    libhal::util
-    libhal::libhal
-    libhal::${platform_library}
-    startup_code)
-libhal_post_build(${current_project})
-libhal_disassemble(${current_project})
+)

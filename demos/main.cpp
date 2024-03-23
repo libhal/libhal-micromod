@@ -12,31 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <libhal-armcortex/startup.hpp>
-#include <libhal-armcortex/system_control.hpp>
+#include <libhal-exceptions/control.hpp>
 #include <libhal-micromod/micromod.hpp>
+#include <libhal-util/steady_clock.hpp>
 #include <libhal/error.hpp>
 
-hal::status application();
+void application();
+
+[[noreturn]] void terminate_handler() noexcept
+{
+  using namespace std::chrono_literals;
+  using namespace hal::literals;
+  // Replace this with something that makes sense...
+  auto& clock = hal::micromod::v1::uptime_clock();
+  auto& led = hal::micromod::v1::led();
+
+  while (true) {
+    led.level(false);
+    hal::delay(clock, 100ms);
+    led.level(true);
+    hal::delay(clock, 100ms);
+    led.level(false);
+    hal::delay(clock, 100ms);
+    led.level(true);
+    hal::delay(clock, 1000ms);
+  }
+}
 
 int main()
 {
   hal::micromod::v1::initialize_platform();
+  hal::set_terminate(terminate_handler);
 
-  auto is_finished = application();
+  application();
 
-  if (!is_finished) {
-    hal::micromod::v1::reset();
-  } else {
-    hal::halt();
-  }
-
+  // If application returns for some reason, reset the device.
+  hal::micromod::v1::reset();
   return 0;
 }
-
-namespace boost {
-void throw_exception([[maybe_unused]] std::exception const& e)
-{
-  hal::micromod::v1::reset();
-}
-}  // namespace boost
