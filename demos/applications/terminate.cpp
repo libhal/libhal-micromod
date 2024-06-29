@@ -16,7 +16,7 @@
 #include <libhal-util/serial.hpp>
 #include <libhal-util/steady_clock.hpp>
 
-volatile bool should_terminate = true;
+bool volatile should_terminate = true;
 
 void application()
 {

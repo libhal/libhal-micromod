@@ -26,7 +26,7 @@ void initialize_platform()
 
 hal::steady_clock& uptime_clock()
 {
-  const auto cpu_frequency =
+  auto const cpu_frequency =
     hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu);
   static hal::cortex_m::dwt_counter steady_clock(cpu_frequency);
   return steady_clock;

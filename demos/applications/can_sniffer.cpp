@@ -26,12 +26,12 @@ void application()
 
   hal::print(console, "Waiting for CAN messages...\n");
 
-  can.on_receive([&console](const hal::can::message_t& p_message) {
+  can.on_receive([&console](hal::can::message_t const& p_message) {
     hal::print<64>(console, "{ ");
     hal::print<64>(console, "id = %lu, ", p_message.id);
     hal::print<64>(console, "length = %lu, ", p_message.length);
     hal::print(console, "payload = { ");
-    for (const auto& data : std::span<const hal::byte>(p_message.payload)
+    for (auto const& data : std::span<hal::byte const>(p_message.payload)
                               .first(p_message.length)) {
       hal::print<8>(console, "0x%02X, ", data);
     }
