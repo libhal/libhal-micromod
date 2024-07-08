@@ -18,7 +18,7 @@ from conan.tools.build import check_min_cppstd
 from conan.tools.cmake import CMake
 from conan import ConanFile
 
-required_conan_version = ">=2.0.14"
+required_conan_version = ">=2.2.2"
 
 
 class libhal_micromod_conan(ConanFile):
@@ -37,7 +37,7 @@ class libhal_micromod_conan(ConanFile):
         "micromod_board": "unspecified",
     }
 
-    python_requires = "libhal-bootstrap/[^2.0.0]"
+    python_requires = "libhal-bootstrap/[^2.1.2]"
     python_requires_extend = "libhal-bootstrap.library"
 
     def build(self):
@@ -60,8 +60,8 @@ class libhal_micromod_conan(ConanFile):
         bootstrap = self.python_requires["libhal-bootstrap"]
         bootstrap.module.add_library_requirements(self)
 
-        LPC40_PACKAGE = "libhal-lpc40/[^4.0.0]"
-        STM32F1_PACKAGE = "libhal-stm32f1/[^4.0.0]"
+        LPC40_PACKAGE = "libhal-lpc40/[^5.1.0]"
+        STM32F1_PACKAGE = "libhal-stm32f1/[^5.0.0]"
 
         micromod_board = str(self.options.micromod_board)
         if micromod_board == "mod-lpc40-v5":

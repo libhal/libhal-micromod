@@ -50,7 +50,7 @@ void initialize_platform();
  *
  * @return hal::steady_clock& - system uptime steady clock.
  */
-hal::steady_clock& uptime_clock();
+[[nodiscard]] hal::steady_clock& uptime_clock();
 
 /**
  * @brief Get core system timer driver
@@ -59,7 +59,7 @@ hal::steady_clock& uptime_clock();
  *
  * @return hal::timer& - reference to the timer
  */
-hal::timer& system_timer();
+[[nodiscard]] hal::timer& system_timer();
 
 /**
  * @brief Enter power savings mode for your processor
@@ -82,7 +82,7 @@ void enter_power_saving_mode();
  * the buffer is equal to or exceeds the lifetime of the console serial port.
  * @return hal::serial& - serial interface to the console
  */
-hal::serial& console(std::span<hal::byte> p_receive_buffer);
+[[nodiscard]] hal::serial& console(std::span<hal::byte> p_receive_buffer);
 
 /**
  * @brief Retrieve a serial console with a statically allocated receive buffer
@@ -111,7 +111,8 @@ hal::serial& console(std::span<hal::byte> p_receive_buffer);
  * @param p_receive_buffer_size - target size of the console receive buffer
  * @return hal::serial& - serial interface to the console
  */
-inline hal::serial& console(hal::buffer_param auto p_receive_buffer_size)
+[[nodiscard]] inline hal::serial& console(
+  hal::buffer_param auto p_receive_buffer_size)
 {
   static_assert(p_receive_buffer_size() > 0,
                 "Console receive buffer must be greater than 0.");
@@ -143,7 +144,7 @@ inline hal::serial& console(hal::buffer_param auto p_receive_buffer_size)
  * @return hal::output_pin& - Statically allocated output pin driver connected
  * to the LED.
  */
-hal::output_pin& led();
+[[nodiscard]] hal::output_pin& led();
 
 // =============================================================================
 // ANALOG
@@ -154,49 +155,49 @@ hal::output_pin& led();
  *
  * @return hal::adc& - Statically allocated analog pin driver.
  */
-hal::adc& a0();
+[[nodiscard]] hal::adc& a0();
 
 /**
  * @brief Driver for adc pin 1
  *
  * @return hal::adc& - Statically allocated analog pin driver.
  */
-hal::adc& a1();
+[[nodiscard]] hal::adc& a1();
 
 /**
  * @brief Driver for battery analog signal which is 1/3rd of the VIN voltage
  *
  * @return hal::adc& - Statically allocated battery analog pin driver.
  */
-hal::adc& battery();
+[[nodiscard]] hal::adc& battery();
 
 /**
  * @brief Driver for dac pin 0
  *
  * @return hal::dac& - Statically allocated dac pin driver.
  */
-hal::dac& d0();
+[[nodiscard]] hal::dac& d0();
 
 /**
  * @brief Driver for dac pin 1
  *
  * @return hal::dac& - Statically allocated dac pin driver.
  */
-hal::dac& d1();
+[[nodiscard]] hal::dac& d1();
 
 /**
  * @brief Driver for pwm pin 0
  *
  * @return hal::pwm& - Statically allocated pwm pin driver.
  */
-hal::pwm& pwm0();
+[[nodiscard]] hal::pwm& pwm0();
 
 /**
  * @brief Driver for pwm pin 1
  *
  * @return hal::pwm& - Statically allocated pwm pin driver.
  */
-hal::pwm& pwm1();
+[[nodiscard]] hal::pwm& pwm1();
 
 // =============================================================================
 // Serial Communication
@@ -207,7 +208,7 @@ hal::pwm& pwm1();
  *
  * @return hal::i2c& - Statically allocated i2c driver.
  */
-hal::i2c& i2c();
+[[nodiscard]] hal::i2c& i2c();
 
 /**
  * @brief Driver for i2c interrupt pin
@@ -217,14 +218,14 @@ hal::i2c& i2c();
  *
  * @return hal::interrupt_pin& - Statically allocated interrupt pin driver.
  */
-hal::interrupt_pin& i2c_interrupt_pin();
+[[nodiscard]] hal::interrupt_pin& i2c_interrupt_pin();
 
 /**
  * @brief Driver for the alternative i2c bus 1
  *
  * @return hal::i2c& - Statically allocated i2c driver.
  */
-hal::i2c& i2c1();
+[[nodiscard]] hal::i2c& i2c1();
 
 /**
  * @brief Driver for the main spi bus
@@ -236,7 +237,7 @@ hal::i2c& i2c1();
  *
  * @return hal::spi&
  */
-hal::spi& spi();
+[[nodiscard]] hal::spi& spi();
 
 /**
  * @brief Driver for spi interrupt pin
@@ -245,14 +246,14 @@ hal::spi& spi();
  *
  * @return hal::interrupt_pin& - interrupt pin for spi activity
  */
-hal::interrupt_pin& spi_interrupt_pin();
+[[nodiscard]] hal::interrupt_pin& spi_interrupt_pin();
 
 /**
  * @brief Driver for the alternative spi port 1
  *
  * @return hal::spi& - spi port 1
  */
-hal::spi& spi1();
+[[nodiscard]] hal::spi& spi1();
 
 /**
  * @brief Driver for uart 1 port
@@ -263,7 +264,7 @@ hal::spi& spi1();
  * the buffer is equal to or exceeds the lifetime of the uart port.
  * @return hal::serial& - uart port 1
  */
-hal::serial& uart1(std::span<hal::byte> p_receive_buffer);
+[[nodiscard]] hal::serial& uart1(std::span<hal::byte> p_receive_buffer);
 
 /**
  * @brief Driver for uart 0 port
@@ -274,52 +275,52 @@ hal::serial& uart1(std::span<hal::byte> p_receive_buffer);
  * the buffer is equal to or exceeds the lifetime of the uart port.
  * @return hal::serial& - uart port 2
  */
-hal::serial& uart2(std::span<hal::byte> p_receive_buffer);
+[[nodiscard]] hal::serial& uart2(std::span<hal::byte> p_receive_buffer);
 
 /**
  * @brief can bus driver
  *
  * @return hal::can& - can driver
  */
-hal::can& can();
+[[nodiscard]] hal::can& can();
 
 // =============================================================================
 // DIGITAL
 // =============================================================================
 
-hal::output_pin& output_g0();
-hal::output_pin& output_g1();
-hal::output_pin& output_g2();
-hal::output_pin& output_g3();
-hal::output_pin& output_g4();
-hal::output_pin& output_g5();
-hal::output_pin& output_g6();
-hal::output_pin& output_g7();
-hal::output_pin& output_g8();
-hal::output_pin& output_g9();
-hal::output_pin& output_g10();
+[[nodiscard]] hal::output_pin& output_g0();
+[[nodiscard]] hal::output_pin& output_g1();
+[[nodiscard]] hal::output_pin& output_g2();
+[[nodiscard]] hal::output_pin& output_g3();
+[[nodiscard]] hal::output_pin& output_g4();
+[[nodiscard]] hal::output_pin& output_g5();
+[[nodiscard]] hal::output_pin& output_g6();
+[[nodiscard]] hal::output_pin& output_g7();
+[[nodiscard]] hal::output_pin& output_g8();
+[[nodiscard]] hal::output_pin& output_g9();
+[[nodiscard]] hal::output_pin& output_g10();
 
-hal::input_pin& input_g0();
-hal::input_pin& input_g1();
-hal::input_pin& input_g2();
-hal::input_pin& input_g3();
-hal::input_pin& input_g4();
-hal::input_pin& input_g5();
-hal::input_pin& input_g6();
-hal::input_pin& input_g7();
-hal::input_pin& input_g8();
-hal::input_pin& input_g9();
-hal::input_pin& input_g10();
+[[nodiscard]] hal::input_pin& input_g0();
+[[nodiscard]] hal::input_pin& input_g1();
+[[nodiscard]] hal::input_pin& input_g2();
+[[nodiscard]] hal::input_pin& input_g3();
+[[nodiscard]] hal::input_pin& input_g4();
+[[nodiscard]] hal::input_pin& input_g5();
+[[nodiscard]] hal::input_pin& input_g6();
+[[nodiscard]] hal::input_pin& input_g7();
+[[nodiscard]] hal::input_pin& input_g8();
+[[nodiscard]] hal::input_pin& input_g9();
+[[nodiscard]] hal::input_pin& input_g10();
 
-hal::interrupt_pin& interrupt_g0();
-hal::interrupt_pin& interrupt_g1();
-hal::interrupt_pin& interrupt_g2();
-hal::interrupt_pin& interrupt_g3();
-hal::interrupt_pin& interrupt_g4();
-hal::interrupt_pin& interrupt_g5();
-hal::interrupt_pin& interrupt_g6();
-hal::interrupt_pin& interrupt_g7();
-hal::interrupt_pin& interrupt_g8();
-hal::interrupt_pin& interrupt_g9();
-hal::interrupt_pin& interrupt_g10();
+[[nodiscard]] hal::interrupt_pin& interrupt_g0();
+[[nodiscard]] hal::interrupt_pin& interrupt_g1();
+[[nodiscard]] hal::interrupt_pin& interrupt_g2();
+[[nodiscard]] hal::interrupt_pin& interrupt_g3();
+[[nodiscard]] hal::interrupt_pin& interrupt_g4();
+[[nodiscard]] hal::interrupt_pin& interrupt_g5();
+[[nodiscard]] hal::interrupt_pin& interrupt_g6();
+[[nodiscard]] hal::interrupt_pin& interrupt_g7();
+[[nodiscard]] hal::interrupt_pin& interrupt_g8();
+[[nodiscard]] hal::interrupt_pin& interrupt_g9();
+[[nodiscard]] hal::interrupt_pin& interrupt_g10();
 }  // namespace hal::micromod::v1
