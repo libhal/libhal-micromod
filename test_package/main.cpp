@@ -18,10 +18,3 @@ int main()
 {
   // hal::micromod::micromod_replace_me bar;
 }
-
-namespace boost {
-void throw_exception(std::exception const& e)
-{
-  hal::halt();
-}
-}  // namespace boost
