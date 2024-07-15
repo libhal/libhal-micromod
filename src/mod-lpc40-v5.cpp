@@ -12,6 +12,7 @@
 #include <libhal-lpc40/interrupt_pin.hpp>
 #include <libhal-lpc40/output_pin.hpp>
 #include <libhal-lpc40/pwm.hpp>
+#include <libhal-lpc40/spi.hpp>
 #include <libhal-lpc40/uart.hpp>
 #include <libhal-util/enum.hpp>
 
@@ -103,9 +104,11 @@ hal::i2c& i2c1()
   return driver;
 }
 
-#if 0
-hal::spi& spi();
-#endif
+hal::spi& spi()
+{
+  static hal::lpc40::spi spi0(0);
+  return spi0;
+}
 
 hal::output_pin& spi_cs()
 {
@@ -113,9 +116,11 @@ hal::output_pin& spi_cs()
   return driver;
 }
 
-#if 0
-hal::spi& spi1();
-#endif
+hal::spi& spi1()
+{
+  static hal::lpc40::spi spi2(2);
+  return spi2;
+}
 
 hal::output_pin& spi1_cs()
 {
