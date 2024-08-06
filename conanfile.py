@@ -44,10 +44,9 @@ class libhal_micromod_conan(ConanFile):
         cmake = CMake(self)
 
         micromod_board = str(self.options.micromod_board)
-        if micromod_board == "mod-lpc40-v5":
-            platform_library = "lpc40"
-        elif micromod_board == "mod-stm32f1-v4":
-            platform_library = "stm32f1"
+        if (micromod_board == "mod-lpc40-v5" or
+                micromod_board == "mod-stm32f1-v4"):
+            platform_library = "arm-mcu"
 
         cmake.configure(variables={
             "LIBHAL_MICROMOD_BOARD": str(self.options.micromod_board),
@@ -60,14 +59,10 @@ class libhal_micromod_conan(ConanFile):
         bootstrap = self.python_requires["libhal-bootstrap"]
         bootstrap.module.add_library_requirements(self)
 
-        LPC40_PACKAGE = "libhal-lpc40/[^5.1.0]"
-        STM32F1_PACKAGE = "libhal-stm32f1/[^5.0.0]"
-
+        arm_mcu_platform = ["mod-lpc40-v5", "mod-stm32f1-v4"]
         micromod_board = str(self.options.micromod_board)
-        if micromod_board == "mod-lpc40-v5":
-            self.requires(LPC40_PACKAGE, transitive_headers=True)
-        elif micromod_board == "mod-stm32f1-v4":
-            self.requires(STM32F1_PACKAGE, transitive_headers=True)
+        if micromod_board in arm_mcu_platform:
+            self.requires("libhal-arm-mcu/[^1.0.0]", transitive_headers=True)
         else:
             raise ConanInvalidConfiguration(
                 f"MicroMod Board '{micromod_board}' not supported!")
