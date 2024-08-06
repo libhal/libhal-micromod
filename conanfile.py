@@ -46,7 +46,7 @@ class libhal_micromod_conan(ConanFile):
         micromod_board = str(self.options.micromod_board)
         if micromod_board == "mod-lpc40-v5":
             platform_library = "lpc40"
-        elif micromod_board == "mod-stm32f1-v4":
+        elif micromod_board.startswith("mod-stm32f1-v"):
             platform_library = "stm32f1"
 
         cmake.configure(variables={
@@ -66,7 +66,7 @@ class libhal_micromod_conan(ConanFile):
         micromod_board = str(self.options.micromod_board)
         if micromod_board == "mod-lpc40-v5":
             self.requires(LPC40_PACKAGE, transitive_headers=True)
-        elif micromod_board == "mod-stm32f1-v4":
+        elif micromod_board.startswith("mod-stm32f1-v"):
             self.requires(STM32F1_PACKAGE, transitive_headers=True)
         else:
             raise ConanInvalidConfiguration(
