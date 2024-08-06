@@ -39,3 +39,13 @@ jobs:
       compiler_profile_url: https://github.com/libhal/arm-gnu-toolchain.git
       compiler_profile: v1/arm-gcc-12.3
     secrets: inherit
+
+  mod-stm32f1-v5:
+    uses: ./.github/workflows/deploy_version.yml
+    with:
+      version: ${{ inputs.version }}
+      profile: conan/profiles/v1/mod-stm32f1-v5
+      compiler_profile_url: https://github.com/libhal/arm-gnu-toolchain.git
+      compiler_profile: v1/arm-gcc-12.3
+    secrets: inherit
+    
