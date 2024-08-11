@@ -21,7 +21,7 @@ namespace hal::micromod::v1 {
 void initialize_platform()
 {
   using namespace hal::literals;
-  constexpr hertz crystal_frequency = 10.0_MHz;
+  constexpr hertz crystal_frequency = 12.0_MHz;
   hal::lpc40::maximum(crystal_frequency);
 }
 
