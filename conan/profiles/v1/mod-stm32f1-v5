@@ -7,4 +7,4 @@ libc=custom
 [options]
 *:platform=micromod
 *:micromod_board=mod-stm32f1-v5
-libhal-stm32f1/*:platform=stm32f103c8
+libhal-arm-mcu/*:platform=stm32f103c8
