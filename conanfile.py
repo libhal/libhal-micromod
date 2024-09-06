@@ -45,7 +45,8 @@ class libhal_micromod_conan(ConanFile):
 
         micromod_board = str(self.options.micromod_board)
         if (micromod_board == "mod-lpc40-v5" or
-                micromod_board == "mod-stm32f1-v4"):
+                micromod_board == "mod-stm32f1-v4" or
+                micromod_board == "mod-stm32f1-v5"):
             platform_library = "arm-mcu"
 
         cmake.configure(variables={
@@ -59,7 +60,7 @@ class libhal_micromod_conan(ConanFile):
         bootstrap = self.python_requires["libhal-bootstrap"]
         bootstrap.module.add_library_requirements(self)
 
-        arm_mcu_platform = ["mod-lpc40-v5", "mod-stm32f1-v4"]
+        arm_mcu_platform = ["mod-lpc40-v5", "mod-stm32f1-v4", "mod-stm32f1-v5"]
         micromod_board = str(self.options.micromod_board)
         if micromod_board in arm_mcu_platform:
             self.requires("libhal-arm-mcu/[^1.0.0]", transitive_headers=True)
