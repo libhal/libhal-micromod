@@ -99,14 +99,17 @@ hal::output_pin& output_g0()
 }
 hal::output_pin& output_g1()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::output_pin, 1>();
 }
 hal::output_pin& output_g2()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::output_pin, 2>();
 }
 hal::output_pin& output_g3()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::output_pin, 3>();
 }
 }  // namespace hal::micromod::v1
