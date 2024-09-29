@@ -23,6 +23,7 @@ libhal_build_demos(
     hello_world
     can_sniffer
     terminate
+    i2c
 
     PACKAGES
     libhal-micromod
