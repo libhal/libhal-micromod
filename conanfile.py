@@ -60,6 +60,8 @@ class libhal_micromod_conan(ConanFile):
         bootstrap = self.python_requires["libhal-bootstrap"]
         bootstrap.module.add_library_requirements(self)
 
+        self.requires("libhal-soft/[^5.3.1]", transitive_headers=False)
+
         arm_mcu_platform = ["mod-lpc40-v5", "mod-stm32f1-v4", "mod-stm32f1-v5"]
         micromod_board = str(self.options.micromod_board)
         if micromod_board in arm_mcu_platform:

@@ -1,15 +1,17 @@
 #include <libhal-micromod/micromod.hpp>
 
-#include <libhal-armcortex/dwt_counter.hpp>
-#include <libhal-armcortex/interrupt.hpp>
-#include <libhal-armcortex/startup.hpp>
-#include <libhal-armcortex/system_control.hpp>
-#include <libhal-stm32f1/can.hpp>
-#include <libhal-stm32f1/clock.hpp>
-#include <libhal-stm32f1/input_pin.hpp>
-#include <libhal-stm32f1/output_pin.hpp>
-#include <libhal-stm32f1/pin.hpp>
-#include <libhal-stm32f1/uart.hpp>
+#include <libhal-arm-mcu/dwt_counter.hpp>
+#include <libhal-arm-mcu/interrupt.hpp>
+#include <libhal-arm-mcu/startup.hpp>
+#include <libhal-arm-mcu/stm32f1/can.hpp>
+#include <libhal-arm-mcu/stm32f1/clock.hpp>
+#include <libhal-arm-mcu/stm32f1/input_pin.hpp>
+#include <libhal-arm-mcu/stm32f1/output_pin.hpp>
+#include <libhal-arm-mcu/stm32f1/pin.hpp>
+#include <libhal-arm-mcu/stm32f1/uart.hpp>
+#include <libhal-arm-mcu/system_control.hpp>
+#include <libhal-soft/bit_bang_i2c.hpp>
+#include <libhal-soft/bit_bang_spi.hpp>
 #include <libhal-util/enum.hpp>
 
 namespace hal::micromod::v1 {
@@ -169,4 +171,41 @@ hal::input_pin& input_g8()
 {
   return gpio<hal::stm32f1::input_pin, 8>();
 }
+
+hal::spi& spi()
+{
+  static hal::stm32f1::output_pin sck('A', 5);
+  static hal::stm32f1::output_pin copi('A', 6);
+  static hal::stm32f1::input_pin cipo('A', 7);
+  static hal::soft::bit_bang_spi bit_bang_spi(
+    hal::soft::bit_bang_spi::pins{
+      .sck = &sck,
+      .copi = &copi,
+      .cipo = &cipo,
+    },
+    uptime_clock());
+
+  return bit_bang_spi;
+}
+
+hal::output_pin& spi_chip_select()
+{
+  static hal::stm32f1::output_pin chip_select_pin('A', 4);
+  return chip_select_pin;
+}
+
+hal::i2c& i2c()
+{
+  static hal::stm32f1::output_pin sda_output_pin('B', 7);
+  static hal::stm32f1::output_pin scl_output_pin('B', 6);
+  static hal::soft::bit_bang_i2c bit_bang_i2c(
+    hal::soft::bit_bang_i2c::pins{
+      .sda = &sda_output_pin,
+      .scl = &scl_output_pin,
+    },
+    uptime_clock());
+
+  return bit_bang_i2c;
+}
+
 }  // namespace hal::micromod::v1
