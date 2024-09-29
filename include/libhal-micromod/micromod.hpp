@@ -246,7 +246,17 @@ void enter_power_saving_mode();
  *
  * @return hal::interrupt_pin& - interrupt pin for spi activity
  */
-[[nodiscard]] hal::interrupt_pin& spi_interrupt_pin();
+[[deprecated("This doesn't exist on micromod v1, DO NOT USE THIS API.")]]
+hal::interrupt_pin& spi_interrupt_pin();
+
+/**
+ * @brief Driver for spi interrupt pin
+ *
+ * NOTE: that this pin can be used as an interrupt pin one or both spi ports.
+ *
+ * @return hal::output_pin& - interrupt pin for spi activity
+ */
+[[nodiscard]] hal::output_pin& spi_chip_select();
 
 /**
  * @brief Driver for the alternative spi port 1

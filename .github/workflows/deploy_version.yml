@@ -15,7 +15,6 @@
 name: 🚀 Deploy Version
 
 on:
-  workflow_dispatch:
   workflow_call:
     inputs:
       version:
