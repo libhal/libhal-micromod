@@ -10,8 +10,8 @@
 #include <libhal-arm-mcu/stm32f1/pin.hpp>
 #include <libhal-arm-mcu/stm32f1/uart.hpp>
 #include <libhal-arm-mcu/system_control.hpp>
-#include <libhal-soft/bit_bang_i2c.hpp>
-#include <libhal-soft/bit_bang_spi.hpp>
+#include <libhal-util/bit_bang_i2c.hpp>
+#include <libhal-util/bit_bang_spi.hpp>
 #include <libhal-util/enum.hpp>
 
 namespace hal::micromod::v1 {
@@ -134,8 +134,8 @@ hal::spi& spi()
   static hal::stm32f1::output_pin sck('A', 5);
   static hal::stm32f1::output_pin copi('A', 6);
   static hal::stm32f1::input_pin cipo('A', 7);
-  static hal::soft::bit_bang_spi bit_bang_spi(
-    hal::soft::bit_bang_spi::pins{
+  static hal::bit_bang_spi bit_bang_spi(
+    hal::bit_bang_spi::pins{
       .sck = &sck,
       .copi = &copi,
       .cipo = &cipo,
