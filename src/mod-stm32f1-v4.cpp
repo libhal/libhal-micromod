@@ -115,6 +115,23 @@ hal::output_pin& output_g3()
   return gpio<hal::stm32f1::output_pin, 3>();
 }
 
+hal::input_pin& input_g0()
+{
+  return gpio<hal::stm32f1::input_pin, 0>();
+}
+hal::input_pin& input_g1()
+{
+  return gpio<hal::stm32f1::input_pin, 1>();
+}
+hal::input_pin& input_g2()
+{
+  return gpio<hal::stm32f1::input_pin, 2>();
+}
+hal::input_pin& input_g3()
+{
+  return gpio<hal::stm32f1::input_pin, 3>();
+}
+
 hal::i2c& i2c()
 {
   static hal::stm32f1::output_pin sda_output_pin('B', 7);
