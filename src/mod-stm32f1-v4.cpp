@@ -137,18 +137,22 @@ hal::output_pin& output_g8()
 
 hal::input_pin& input_g0()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::input_pin, 0>();
 }
 hal::input_pin& input_g1()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::input_pin, 1>();
 }
 hal::input_pin& input_g2()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::input_pin, 2>();
 }
 hal::input_pin& input_g3()
 {
+  hal::stm32f1::release_jtag_pins();
   return gpio<hal::stm32f1::input_pin, 3>();
 }
 hal::input_pin& input_g4()
