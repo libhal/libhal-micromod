@@ -289,10 +289,128 @@ hal::interrupt_pin& spi_interrupt_pin();
 
 /**
  * @brief can bus driver
+ * @deprecated Use the other can interfaces, not this one. This is here for
+ * backwards compatibility.
  *
  * @return hal::can& - can driver
  */
 [[nodiscard]] hal::can& can();
+
+/**
+ * @brief can bus transceiver driver
+ *
+ * @return hal::can& - Allows an application to send and receive can messages
+ */
+[[nodiscard]] hal::can_transceiver& can_transceiver(
+  std::span<can_message> p_receive_buffer);
+
+/**
+ * @brief can bus transceiver driver
+ *
+ * @return hal::can& - Provides bus level control and configuration of the can
+ * device.
+ */
+[[nodiscard]] hal::can_bus_manager& can_bus_manager();
+
+/**
+ * @brief can bus interrupt driver
+ *
+ * @return hal::can& - Provides APIs to register interrupts on each can message
+ * received that passes the filter.
+ */
+[[nodiscard]] hal::can_interrupt& can_interrupt();
+
+/**
+ * @brief can bus identifier filter 0
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID
+ */
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter0();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter1();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter2();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter3();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter4();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter5();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter6();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter7();
+
+/**
+ * @brief can bus mask filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a mask
+ */
+[[nodiscard]] hal::can_mask_filter& can_mask_filter0();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter1();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter2();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter3();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter4();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter5();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter6();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter7();
+
+/**
+ * @brief can bus range filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a range
+ */
+[[nodiscard]] hal::can_range_filter& can_range_filter0();
+[[nodiscard]] hal::can_range_filter& can_range_filter1();
+[[nodiscard]] hal::can_range_filter& can_range_filter2();
+[[nodiscard]] hal::can_range_filter& can_range_filter3();
+[[nodiscard]] hal::can_range_filter& can_range_filter4();
+[[nodiscard]] hal::can_range_filter& can_range_filter5();
+[[nodiscard]] hal::can_range_filter& can_range_filter6();
+[[nodiscard]] hal::can_range_filter& can_range_filter7();
+
+/**
+ * @brief can bus extended identifier filter 0
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID
+ */
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter0();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter1();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter2();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter3();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter4();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter5();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter6();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter7();
+
+/**
+ * @brief can bus extended mask filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a mask
+ */
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter0();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter1();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter2();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter3();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter4();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter5();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter6();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter7();
+
+/**
+ * @brief can bus extended range filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a range
+ */
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter0();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter1();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter2();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter3();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter4();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter5();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter6();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter7();
 
 // =============================================================================
 // DIGITAL
