@@ -211,4 +211,198 @@ hal::output_pin& spi_chip_select()
   static hal::stm32f1::output_pin chip_select_pin('A', 4);
   return chip_select_pin;
 }
+
+// =============================================================================
+//
+// CAN BUS
+//
+// =============================================================================
+
+namespace {
+auto& get_can_peripheral()
+{
+  static hal::stm32f1::can_peripheral_manager can_manager(
+    100_kHz, hal::stm32f1::can_pins::pb9_pb8);
+  return can_manager;
+}
+template<hal::u8 set_number>
+auto& get_identifier_filter_set()
+{
+  static auto filter_set = get_can_peripheral().acquire_identifier_filter();
+  return filter_set;
+}
+
+template<hal::u8 set_number>
+auto& get_identifier_mask_set()
+{
+  static auto filter_set = get_can_peripheral().acquire_mask_filter();
+  return filter_set;
+}
+
+template<hal::u8 set_number>
+auto& get_extended_identifier_filter_set()
+{
+  static auto filter_set =
+    get_can_peripheral().acquire_extended_identifier_filter();
+  return filter_set;
+}
+
+template<hal::u8 mask_number>
+auto& get_extended_mask()
+{
+  static auto filter = get_can_peripheral().acquire_extended_mask_filter();
+  return filter;
+}
+}  // namespace
+
+hal::can_transceiver& can_transceiver(std::span<can_message> p_receive_buffer)
+{
+  static auto transceiver =
+    get_can_peripheral().acquire_transceiver(p_receive_buffer);
+  return transceiver;
+}
+
+hal::can_bus_manager& can_bus_manager()
+{
+  static auto bus_manager = get_can_peripheral().acquire_bus_manager();
+  return bus_manager;
+}
+
+hal::can_interrupt& can_interrupt()
+{
+  static auto interrupt = get_can_peripheral().acquire_interrupt();
+  return interrupt;
+}
+
+hal::can_identifier_filter& can_identifier_filter0()
+{
+  return get_identifier_filter_set<0>().filter[0];
+}
+hal::can_identifier_filter& can_identifier_filter1()
+{
+  return get_identifier_filter_set<0>().filter[1];
+}
+hal::can_identifier_filter& can_identifier_filter2()
+{
+  return get_identifier_filter_set<0>().filter[2];
+}
+hal::can_identifier_filter& can_identifier_filter3()
+{
+  return get_identifier_filter_set<0>().filter[3];
+}
+hal::can_identifier_filter& can_identifier_filter4()
+{
+  return get_identifier_filter_set<1>().filter[0];
+}
+hal::can_identifier_filter& can_identifier_filter5()
+{
+  return get_identifier_filter_set<1>().filter[1];
+}
+hal::can_identifier_filter& can_identifier_filter6()
+{
+  return get_identifier_filter_set<1>().filter[2];
+}
+hal::can_identifier_filter& can_identifier_filter7()
+{
+  return get_identifier_filter_set<1>().filter[3];
+}
+
+hal::can_mask_filter& can_mask_filter0()
+{
+  return get_identifier_mask_set<0>().filter[0];
+}
+hal::can_mask_filter& can_mask_filter1()
+{
+  return get_identifier_mask_set<0>().filter[1];
+}
+hal::can_mask_filter& can_mask_filter2()
+{
+  return get_identifier_mask_set<1>().filter[0];
+}
+hal::can_mask_filter& can_mask_filter3()
+{
+  return get_identifier_mask_set<1>().filter[1];
+}
+hal::can_mask_filter& can_mask_filter4()
+{
+  return get_identifier_mask_set<2>().filter[0];
+}
+hal::can_mask_filter& can_mask_filter5()
+{
+  return get_identifier_mask_set<2>().filter[1];
+}
+hal::can_mask_filter& can_mask_filter6()
+{
+  return get_identifier_mask_set<3>().filter[0];
+}
+hal::can_mask_filter& can_mask_filter7()
+{
+  return get_identifier_mask_set<3>().filter[1];
+}
+
+hal::can_extended_identifier_filter& can_extended_identifier_filter0()
+{
+  return get_extended_identifier_filter_set<0>().filter[0];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter1()
+{
+  return get_extended_identifier_filter_set<0>().filter[1];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter2()
+{
+  return get_extended_identifier_filter_set<1>().filter[0];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter3()
+{
+  return get_extended_identifier_filter_set<1>().filter[1];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter4()
+{
+  return get_extended_identifier_filter_set<2>().filter[0];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter5()
+{
+  return get_extended_identifier_filter_set<2>().filter[1];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter6()
+{
+  return get_extended_identifier_filter_set<3>().filter[0];
+}
+hal::can_extended_identifier_filter& can_extended_identifier_filter7()
+{
+  return get_extended_identifier_filter_set<3>().filter[1];
+}
+
+hal::can_extended_mask_filter& can_extended_mask_filter0()
+{
+  return get_extended_mask<0>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter1()
+{
+  return get_extended_mask<1>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter2()
+{
+  return get_extended_mask<2>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter3()
+{
+  return get_extended_mask<3>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter4()
+{
+  return get_extended_mask<4>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter5()
+{
+  return get_extended_mask<5>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter6()
+{
+  return get_extended_mask<6>();
+}
+hal::can_extended_mask_filter& can_extended_mask_filter7()
+{
+  return get_extended_mask<7>();
+}
 }  // namespace hal::micromod::v1

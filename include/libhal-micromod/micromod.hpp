@@ -147,7 +147,7 @@ void enter_power_saving_mode();
 [[nodiscard]] hal::output_pin& led();
 
 // =============================================================================
-// ANALOG
+// ADC
 // =============================================================================
 
 /**
@@ -171,6 +171,10 @@ void enter_power_saving_mode();
  */
 [[nodiscard]] hal::adc& battery();
 
+// =============================================================================
+// DAC
+// =============================================================================
+
 /**
  * @brief Driver for dac pin 0
  *
@@ -184,6 +188,10 @@ void enter_power_saving_mode();
  * @return hal::dac& - Statically allocated dac pin driver.
  */
 [[nodiscard]] hal::dac& d1();
+
+// =============================================================================
+// PWM
+// =============================================================================
 
 /**
  * @brief Driver for pwm pin 0
@@ -200,7 +208,7 @@ void enter_power_saving_mode();
 [[nodiscard]] hal::pwm& pwm1();
 
 // =============================================================================
-// Serial Communication
+// I2C
 // =============================================================================
 
 /**
@@ -226,6 +234,10 @@ void enter_power_saving_mode();
  * @return hal::i2c& - Statically allocated i2c driver.
  */
 [[nodiscard]] hal::i2c& i2c1();
+
+// =============================================================================
+// SPI
+// =============================================================================
 
 /**
  * @brief Driver for the main spi bus
@@ -265,6 +277,10 @@ hal::interrupt_pin& spi_interrupt_pin();
  */
 [[nodiscard]] hal::spi& spi1();
 
+// =============================================================================
+// UART
+// =============================================================================
+
 /**
  * @brief Driver for uart 1 port
  *
@@ -286,13 +302,6 @@ hal::interrupt_pin& spi_interrupt_pin();
  * @return hal::serial& - uart port 2
  */
 [[nodiscard]] hal::serial& uart2(std::span<hal::byte> p_receive_buffer);
-
-/**
- * @brief can bus driver
- *
- * @return hal::can& - can driver
- */
-[[nodiscard]] hal::can& can();
 
 // =============================================================================
 // DIGITAL
@@ -333,4 +342,133 @@ hal::interrupt_pin& spi_interrupt_pin();
 [[nodiscard]] hal::interrupt_pin& interrupt_g8();
 [[nodiscard]] hal::interrupt_pin& interrupt_g9();
 [[nodiscard]] hal::interrupt_pin& interrupt_g10();
+
+// =============================================================================
+// CAN
+// =============================================================================
+
+/**
+ * @brief can bus driver
+ * @deprecated Use the other can interfaces, not this one. This is here for
+ * backwards compatibility.
+ *
+ * @return hal::can& - can driver
+ */
+[[nodiscard]] hal::can& can();
+
+/**
+ * @brief can bus transceiver driver
+ *
+ * @return hal::can& - Allows an application to send and receive can messages
+ */
+[[nodiscard]] hal::can_transceiver& can_transceiver(
+  std::span<can_message> p_receive_buffer);
+
+/**
+ * @brief can bus transceiver driver
+ *
+ * @return hal::can& - Provides bus level control and configuration of the can
+ * device.
+ */
+[[nodiscard]] hal::can_bus_manager& can_bus_manager();
+
+/**
+ * @brief can bus interrupt driver
+ *
+ * @return hal::can& - Provides APIs to register interrupts on each can message
+ * received that passes the filter.
+ */
+[[nodiscard]] hal::can_interrupt& can_interrupt();
+
+/**
+ * @brief can bus identifier filter 0
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID
+ */
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter0();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter1();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter2();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter3();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter4();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter5();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter6();
+[[nodiscard]] hal::can_identifier_filter& can_identifier_filter7();
+
+/**
+ * @brief can bus mask filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a mask
+ */
+[[nodiscard]] hal::can_mask_filter& can_mask_filter0();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter1();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter2();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter3();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter4();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter5();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter6();
+[[nodiscard]] hal::can_mask_filter& can_mask_filter7();
+
+/**
+ * @brief can bus range filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a range
+ */
+[[nodiscard]] hal::can_range_filter& can_range_filter0();
+[[nodiscard]] hal::can_range_filter& can_range_filter1();
+[[nodiscard]] hal::can_range_filter& can_range_filter2();
+[[nodiscard]] hal::can_range_filter& can_range_filter3();
+[[nodiscard]] hal::can_range_filter& can_range_filter4();
+[[nodiscard]] hal::can_range_filter& can_range_filter5();
+[[nodiscard]] hal::can_range_filter& can_range_filter6();
+[[nodiscard]] hal::can_range_filter& can_range_filter7();
+
+/**
+ * @brief can bus extended identifier filter 0
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID
+ */
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter0();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter1();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter2();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter3();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter4();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter5();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter6();
+[[nodiscard]] hal::can_extended_identifier_filter&
+can_extended_identifier_filter7();
+
+/**
+ * @brief can bus extended mask filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a mask
+ */
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter0();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter1();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter2();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter3();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter4();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter5();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter6();
+[[nodiscard]] hal::can_extended_mask_filter& can_extended_mask_filter7();
+
+/**
+ * @brief can bus extended range filters
+ *
+ * @return hal::can& - Provides APIs to filter messages by ID and a range
+ */
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter0();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter1();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter2();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter3();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter4();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter5();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter6();
+[[nodiscard]] hal::can_extended_range_filter& can_extended_range_filter7();
 }  // namespace hal::micromod::v1
