@@ -217,10 +217,12 @@ hal::i2c& i2c()
 namespace {
 auto& get_can_peripheral()
 {
-  static hal::stm32f1::can_peripheral_manager can_manager(
-    100_kHz, hal::stm32f1::can_pins::pb9_pb8);
-  return can_manager;
+  using namespace std::chrono_literals;
+  static hal::stm32f1::can_peripheral_manager can(
+    100_kHz, uptime_clock(), 1ms, hal::stm32f1::can_pins::pb9_pb8);
+  return can;
 }
+
 template<hal::u8 set_number>
 auto& get_identifier_filter_set()
 {
