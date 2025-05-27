@@ -2,10 +2,10 @@
 build_type=Release
 os=baremetal
 arch=cortex-m4f
-libc=custom
 
 [options]
 *:platform=micromod
 *:micromod_board=mod-lpc40-v5
 libhal-lpc40/*:platform=lpc4078
 libhal-arm-mcu/*:platform=lpc4078
+*:default_specs=False
