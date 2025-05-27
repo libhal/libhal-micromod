@@ -17,7 +17,7 @@ from conan.tools.cmake import cmake_layout
 
 
 class demos(ConanFile):
-    python_requires = "libhal-bootstrap/[^4.2.1]"
+    python_requires = "libhal-bootstrap/[>=4.3.0 <5]"
     python_requires_extend = "libhal-bootstrap.demo"
 
     def requirements(self):
