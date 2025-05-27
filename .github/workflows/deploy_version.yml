@@ -1,4 +1,4 @@
-# Copyright 2024 Khalil Estell
+# Copyright 2024 - 2025 Khalil Estell and the libhal contributors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      - run: pip3 install conan
+      - run: pipx install conan==2.16.1
       - name: 📡 Add `libhal` repo to conan remotes
         run: conan remote add libhal
           https://libhal.jfrog.io/artifactory/api/conan/trunk-conan
