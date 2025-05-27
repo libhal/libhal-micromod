@@ -37,7 +37,7 @@ class libhal_micromod_conan(ConanFile):
         "micromod_board": "unspecified",
     }
 
-    python_requires = "libhal-bootstrap/[^4.2.1]"
+    python_requires = "libhal-bootstrap/[>=4.3.0 <5]"
     python_requires_extend = "libhal-bootstrap.library"
 
     def build(self):
