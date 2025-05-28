@@ -1,5 +1,7 @@
 #include <libhal-micromod/micromod.hpp>
 
+#include <libhal-arm-mcu/dwt_counter.hpp>
+#include <libhal-arm-mcu/interrupt.hpp>
 #include <libhal-arm-mcu/lpc40/adc.hpp>
 #include <libhal-arm-mcu/lpc40/can.hpp>
 #include <libhal-arm-mcu/lpc40/clock.hpp>
@@ -10,10 +12,8 @@
 #include <libhal-arm-mcu/lpc40/pwm.hpp>
 #include <libhal-arm-mcu/lpc40/spi.hpp>
 #include <libhal-arm-mcu/lpc40/uart.hpp>
-#include <libhal-armcortex/dwt_counter.hpp>
-#include <libhal-armcortex/interrupt.hpp>
-#include <libhal-armcortex/startup.hpp>
-#include <libhal-armcortex/system_control.hpp>
+#include <libhal-arm-mcu/startup.hpp>
+#include <libhal-arm-mcu/system_control.hpp>
 #include <libhal-util/enum.hpp>
 
 namespace hal::micromod::v1 {
