@@ -1,19 +1,19 @@
 #include <libhal-micromod/micromod.hpp>
 
+#include <libhal-arm-mcu/lpc40/adc.hpp>
+#include <libhal-arm-mcu/lpc40/can.hpp>
+#include <libhal-arm-mcu/lpc40/clock.hpp>
+#include <libhal-arm-mcu/lpc40/i2c.hpp>
+#include <libhal-arm-mcu/lpc40/input_pin.hpp>
+#include <libhal-arm-mcu/lpc40/interrupt_pin.hpp>
+#include <libhal-arm-mcu/lpc40/output_pin.hpp>
+#include <libhal-arm-mcu/lpc40/pwm.hpp>
+#include <libhal-arm-mcu/lpc40/spi.hpp>
+#include <libhal-arm-mcu/lpc40/uart.hpp>
 #include <libhal-armcortex/dwt_counter.hpp>
 #include <libhal-armcortex/interrupt.hpp>
 #include <libhal-armcortex/startup.hpp>
 #include <libhal-armcortex/system_control.hpp>
-#include <libhal-lpc40/adc.hpp>
-#include <libhal-lpc40/can.hpp>
-#include <libhal-lpc40/clock.hpp>
-#include <libhal-lpc40/i2c.hpp>
-#include <libhal-lpc40/input_pin.hpp>
-#include <libhal-lpc40/interrupt_pin.hpp>
-#include <libhal-lpc40/output_pin.hpp>
-#include <libhal-lpc40/pwm.hpp>
-#include <libhal-lpc40/spi.hpp>
-#include <libhal-lpc40/uart.hpp>
 #include <libhal-util/enum.hpp>
 
 namespace hal::micromod::v1 {
