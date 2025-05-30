@@ -3,6 +3,7 @@
 #include <libhal-arm-mcu/dwt_counter.hpp>
 #include <libhal-arm-mcu/interrupt.hpp>
 #include <libhal-arm-mcu/startup.hpp>
+#include <libhal-arm-mcu/stm32f1/adc.hpp>
 #include <libhal-arm-mcu/stm32f1/can.hpp>
 #include <libhal-arm-mcu/stm32f1/clock.hpp>
 #include <libhal-arm-mcu/stm32f1/input_pin.hpp>
@@ -10,6 +11,7 @@
 #include <libhal-arm-mcu/stm32f1/pin.hpp>
 #include <libhal-arm-mcu/stm32f1/uart.hpp>
 #include <libhal-arm-mcu/system_control.hpp>
+#include <libhal-util/atomic_spin_lock.hpp>
 #include <libhal-util/bit_bang_i2c.hpp>
 #include <libhal-util/bit_bang_spi.hpp>
 #include <libhal-util/enum.hpp>
@@ -174,6 +176,22 @@ hal::input_pin& input_g7()
 hal::input_pin& input_g8()
 {
   return gpio<hal::stm32f1::input_pin, 8>();
+}
+
+hal::adc& a0()
+{
+  static hal::atomic_spin_lock adc_lock;
+  static hal::stm32f1::adc<hal::stm32f1::peripheral::adc1> adc(adc_lock);
+  static auto driver = adc.acquire_channel(hal::stm32f1::adc_pins::pb0);
+  return driver;
+}
+
+hal::adc& a1()
+{
+  static hal::atomic_spin_lock adc_lock;
+  static hal::stm32f1::adc<hal::stm32f1::peripheral::adc1> adc(adc_lock);
+  static auto driver = adc.acquire_channel(hal::stm32f1::adc_pins::pb1);
+  return driver;
 }
 
 hal::i2c& i2c()
