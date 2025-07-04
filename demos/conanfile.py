@@ -21,4 +21,4 @@ class demos(ConanFile):
     python_requires_extend = "libhal-bootstrap.demo"
 
     def requirements(self):
-        self.requires("libhal-micromod/[1.3.1 || latest]")
+        self.requires("libhal-micromod/[1.4.0 || latest]")
