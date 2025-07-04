@@ -69,6 +69,7 @@ class libhal_micromod_conan(ConanFile):
                 f"MicroMod Board '{micromod_board}' not supported!")
 
     def package_info(self):
+        self.info.python_requires.major_mode()
         self.cpp_info.libs = ["libhal-micromod"]
         self.cpp_info.set_property("cmake_target_name", "libhal::micromod")
         self.buildenv_info.define("LIBHAL_PLATFORM", "micromod")
