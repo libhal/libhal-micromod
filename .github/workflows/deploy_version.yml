@@ -75,9 +75,6 @@ jobs:
       - name: 📦 Build package using ${{ inputs.profile }} @ MinSizeRel
         run: conan create . -pr ${{ inputs.profile }} -pr ${{ inputs.compiler_profile }} -s build_type=MinSizeRel --version=${{ env.VERSION }}
 
-      - name: 🏗️ Build demos for ${{ inputs.profile }} @ MinSizeRel
-        run: conan build demos -pr ${{ inputs.profile }} -pr ${{ inputs.compiler_profile }} -s build_type=Release --version=${{ env.VERSION }}
-
       - name: 📡 Sign into JFrog Artifactory
         if: ${{ inputs.version != '' }}
         env:
