@@ -16,6 +16,8 @@ name: 🚀 Deploy
 
 on:
   workflow_dispatch:
+  release:
+    types: [published]
 
 jobs:
   mod-lpc40-v5:
