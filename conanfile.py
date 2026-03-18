@@ -72,6 +72,9 @@ class libhal_micromod_conan(ConanFile):
         self.cpp_info.set_property("cmake_target_name", "libhal::micromod")
         self.buildenv_info.define("LIBHAL_PLATFORM", "micromod")
         self.buildenv_info.define("LIBHAL_PLATFORM_LIBRARY", "micromod")
+        if "rp" in str(self.options.platform):
+            self.buildenv_info.define("PICO_BOARD_HEADER_DIRS", os.path.join(self.package_folder, "include/libhal-micromod/rp"))
+
 
     def validate(self):
         if self.settings.get_safe("compiler.cppstd"):
