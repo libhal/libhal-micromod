@@ -43,10 +43,9 @@ class libhal_micromod_conan(ConanFile):
     def build(self):
         cmake = CMake(self)
 
+        arm_mcus = ["mod-lpc40-v5", "mod-stm32f1-v4", "mod-stm32f1-v5", "mod-rp2350b"]
         micromod_board = str(self.options.micromod_board)
-        if (micromod_board == "mod-lpc40-v5" or
-                micromod_board == "mod-stm32f1-v4" or
-                micromod_board == "mod-stm32f1-v5"):
+        if (micromod_board in arm_mcus):
             platform_library = "arm-mcu"
 
         cmake.configure(variables={
@@ -60,7 +59,7 @@ class libhal_micromod_conan(ConanFile):
         bootstrap = self.python_requires["libhal-bootstrap"]
         bootstrap.module.add_library_requirements(self)
 
-        arm_mcu_platform = ["mod-lpc40-v5", "mod-stm32f1-v4", "mod-stm32f1-v5"]
+        arm_mcu_platform = ["mod-lpc40-v5", "mod-stm32f1-v4", "mod-stm32f1-v5", "mod-rp2350b"]
         micromod_board = str(self.options.micromod_board)
         if micromod_board in arm_mcu_platform:
             self.requires("libhal-arm-mcu/[^1.4.0]", transitive_headers=True)
@@ -77,9 +76,6 @@ class libhal_micromod_conan(ConanFile):
     def validate(self):
         if self.settings.get_safe("compiler.cppstd"):
             check_min_cppstd(self, self._min_cppstd)
-        if "micromod" != str(self.options.platform):
-            raise ConanInvalidConfiguration(
-                f"Invalid platform '{str(self.options.platform)}'. This package cannot be used if the platform is not set to 'micromod'")
 
     def package_id(self):
         self.info.python_requires.major_mode()
